@@ -1,0 +1,41 @@
+﻿번호,단원,영역,난이도,문제,보기1,보기2,보기3,보기4,정답번호,보상코인,교과서쪽,비고
+1,10,음식 어휘,쉬움,비빔밥의 영어 표기는?,bibimbap,steak,bulgogi,spaghetti,1,30,140,교과서 내용 기반
+2,10,음식 어휘,쉬움,과일 샐러드를 영어로 하면?,hot chocolate,fruit salad,ice cream,fruit juice,2,30,141,교과서 내용 기반
+3,10,음식 어휘,쉬움,스파게티를 영어로 하면?,sikhye,salad,spaghetti,steak,3,30,141,교과서 내용 기반
+4,10,음식 어휘,쉬움,스테이크를 영어로 하면?,spaghetti,cake,juice,steak,4,30,141,교과서 내용 기반
+5,10,음식 어휘,쉬움,주스의 영어 단어는?,juice,meat,egg,vegetable,1,30,141,교과서 내용 기반
+6,10,음식 어휘,쉬움,핫초코를 영어로 하면?,fruit salad,hot chocolate,hot chicken,orange juice,2,30,141,교과서 내용 기반
+7,10,음식 어휘,쉬움,오렌지 주스를 영어로 하면?,kiwi juice,hot chocolate,orange juice,lemon juice,3,30,141,교과서 내용 기반
+8,10,음식 어휘,쉬움,레몬 주스를 영어로 하면?,orange juice,fruit salad,hot chocolate,lemon juice,4,30,145,교과서 내용 기반
+9,10,음식 어휘,보통,교과서에 나오는 떡볶이의 영어 표기는?,tteokbokki,kimchi,bulgogi,bibimbap,1,50,145,교과서 내용 기반
+10,10,음식 어휘,보통,vegetable의 뜻은?,식당,채소,고기,달걀,2,50,148,교과서 내용 기반
+11,10,주문 표현,쉬움,"""무엇을 드시겠어요?""에 알맞은 문장은?",Where are you from?,What is your name?,What would you like to have?,How is your food?,3,30,144,교과서 내용 기반
+12,10,주문 표현,쉬움,"""피자를 먹고 싶어요.""에 알맞은 문장은?",It’s sour.,I’d like to have juice.,What would you like to have?,I’d like to have pizza.,4,30,145,교과서 내용 기반
+13,10,주문 표현,쉬움,What would you like to have?에 알맞은 대답은?,I’d like to have the steak.,It is from Italy.,It’s salty.,How’s your steak?,1,30,146,교과서 내용 기반
+14,10,주문 표현,보통,I’d like to have some ___. (레몬주스),bibimbap,lemon juice,steak,pizza,2,50,146,교과서 내용 기반
+15,10,주문 표현,보통,"""I’d""의 원래 형태는?",I will,I did,I would,I had,3,50,145,교과서 내용 기반
+16,10,주문 표현,보통,"""음식 맛이 어때?""에 해당하는 질문은?",Where is the food?,Do you like books?,What would you like to have?,How’s the food?,4,50,147,교과서 내용 기반
+17,10,주문 표현,보통,"""주스 맛이 어때?""에 해당하는 질문은?",How’s the juice?,Where’s the juice?,Who has the juice?,What’s your juice?,1,50,147,교과서 내용 기반
+18,10,주문 표현,보통,"""케이크를 먹고 싶어요.""에 맞는 문장은?",I’d like to have some steak.,I’d like to have some cake.,It’s too hot.,I’m from Italy.,2,50,146,교과서 내용 기반
+19,10,주문 표현,보통,What would you like ___ have?,at,for,to,on,3,50,147,교과서 내용 기반
+20,10,주문 표현,어려움,공손하게 원하는 음식을 말하는 표현은?,Give me fruit salad now.,Where is the fruit salad?,The fruit salad is sour.,I’d like to have the fruit salad.,4,70,145,교과서 내용 기반
+21,10,맛 표현,쉬움,sweet의 뜻은?,달콤한,신,짠,매운,1,30,141,교과서 내용 기반
+22,10,맛 표현,쉬움,sour의 뜻은?,매운,신,짠,달콤한,2,30,141,교과서 내용 기반
+23,10,맛 표현,쉬움,salty의 뜻은?,매운,달콤한,짠,신,3,30,141,교과서 내용 기반
+24,10,맛 표현,쉬움,hot이 음식 맛을 나타낼 때의 뜻은?,신,단,짠,매운,4,30,141,교과서 내용 기반
+25,10,맛 표현,보통,교과서 노래에서 ice cream의 맛은?,sweet,sour,salty,hot,1,50,144,교과서 내용 기반
+26,10,맛 표현,보통,교과서 노래에서 lemon juice의 맛은?,salty,sour,sweet,hot,2,50,144,교과서 내용 기반
+27,10,맛 표현,보통,"""맛있어.""에 알맞은 문장은?",It’s a restaurant.,It’s an egg.,It’s delicious.,It’s from Italy.,3,50,147,교과서 내용 기반
+28,10,맛 표현,보통,"""너무 매워.""에 알맞은 문장은?",It’s salty.,It’s very sweet.,It’s delicious.,It’s too hot.,4,50,149,교과서 내용 기반
+29,10,문장 구성,보통,빈칸: I’d like ___ have the steak.,to,do,is,at,1,50,146,교과서 내용 기반
+30,10,문장 구성,보통,올바른 문장 순서는? (would / you / what / like / to / have),Would what you like to have?,What would you like to have?,What you would to like have?,You what would like to have?,2,50,146,교과서 내용 기반
+31,10,문장 구성,보통,빈칸: My favorite food ___ pizza.,are,be,is,am,3,50,150,교과서 내용 기반
+32,10,문장 구성,보통,빈칸: It is ___ Italy.,at,with,to,from,4,50,150,교과서 내용 기반
+33,10,문장 구성,어려움,"교과서 문장: It has cheese, vegetables, ___ meat.",and,or,but,so,1,70,150,교과서 내용 기반
+34,10,문장 구성,어려움,빈칸: Let’s go ___ a pizza restaurant together.,on,to,at,from,2,70,150,교과서 내용 기반
+35,10,읽기 이해,보통,"""We Love Korean Food""에서 Tim의 가족이 방문한 곳은?",a bookstore,a school,a Korean restaurant,a hospital,3,50,148,교과서 내용 기반
+36,10,읽기 이해,보통,"""We Love Korean Food""에서 비빔밥에 들어 있는 것으로 언급된 것은?",fish and milk,chocolate and cream,cheese and bread,vegetables and an egg,4,50,148,교과서 내용 기반
+37,10,읽기 이해,보통,Tim이 주문한 음식은?,bibimbap,spaghetti,fruit salad,pizza,1,50,148,교과서 내용 기반
+38,10,읽기 이해,어려움,Tim의 아버지가 주문한 것은?,steak and ice cream,bulgogi and sikhye,bibimbap and juice,pizza and cake,2,70,148,교과서 내용 기반
+39,10,읽기 이해,어려움,교과서에서 sikhye에 대해 말한 맛은?,hot,sour,sweet,salty,3,70,149,교과서 내용 기반
+40,10,읽기 이해,어려움,"""My Favorite Food"" 글에서 pizza가 시작된 나라는?",France,Korea,Japan,Italy,4,70,150,교과서 내용 기반
