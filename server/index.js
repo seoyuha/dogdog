@@ -40,7 +40,7 @@ function rejoin(socket,room,p){
  if(room.started&&p.matchId){const b=room.matches.get(p.matchId);socket.emit('matchReady',{side:room.mode==='pvp'?p.team%2:0,matchId:p.matchId});if(b)socket.emit('state',snapshot(b));p.current=null;if(b&&!b.finished)sendQuestion(socket,p);}
  broadcastLobby(room);return {ok:true,rejoined:true,room:room.id,sessionToken:p.sessionToken};
 }
-function broadcastLobby(room){io.to(room.id).emit('lobby',{room:room.id,mode:room.mode,started:room.started,paused:room.paused,players:[...room.players.values()].map(p=>({id:p.id,name:p.name,teacher:p.teacher,team:p.team,correct:p.correct,attempts:p.attempts,offline:!!p.offline}))});}
+function broadcastLobby(room){io.to(room.id).emit('lobby',{room:room.id,mode:room.mode,started:room.started,paused:room.paused,practice:!!room.practice,players:[...room.players.values()].map(p=>({id:p.id,name:p.name,teacher:p.teacher,team:p.team,correct:p.correct,attempts:p.attempts,offline:!!p.offline}))});}
 function get(socket){const r=rooms.get(socket.data.room);return [r,r?.players.get(socket.id)];}
 function sendQuestion(socket,p){if(p.teacher||!p.matchId)return;const r=rooms.get(socket.data.room);const q=shuffled(selectQuestion(p,r?.bank||bank));p.current=q;p.answered=false;socket.emit('question',publicQuestion(q));}
 function matchOf(r,p){return r?.matches.get(p?.matchId)}
@@ -59,6 +59,16 @@ socket.on('createRoom',(data,cb)=>{cb?.(createRoom(socket,data||{}));});
 socket.on('joinRoom',(data,cb)=>{const room=rooms.get(String(data?.room||'').toUpperCase());if(!room){cb?.({error:'방 코드를 찾을 수 없습니다.'});return;}cb?.(join(socket,room,data||{}));});
 socket.on('setMode',(mode)=>{const [r,p]=get(socket);if(!r||!p?.teacher||r.started)return;if(['solo','coop','pvp'].includes(mode)){r.mode=mode;broadcastLobby(r)}});
 socket.on('setTeam',(data)=>{const [r,p]=get(socket);if(!r||!p?.teacher||r.started)return;const target=r.players.get(data?.id);if(target&&!target.teacher){const newTeam=Math.max(0,Math.min(5,Number(data.team)||0));if(['coop','pvp'].includes(r.mode)&&[...r.players.values()].filter(q=>!q.teacher&&q!==target&&q.team===newTeam).length>=5){socket.emit('roomError','한 팀에는 최대 5명까지 배정할 수 있습니다.');return;}target.team=newTeam;broadcastLobby(r)}});
+/* 🎮 혼자 연습(개인전): 교사 방 없이 학생 혼자 바로 시작해요 (교사 PIN 필요 없음, 교사 화면에는 안 보여요) */
+socket.on('soloPlay',(data,cb)=>{const nm=String(data?.name||'').trim().slice(0,16);if(!nm){cb?.({error:'이름을 입력하세요.'});return;}
+ const [old]=get(socket);if(old?.practice){rooms.delete(old.id);}
+ let id=code();while(rooms.has(id))id=code();
+ const room={id,mode:'solo',practice:true,host:null,players:new Map(),matches:new Map(),started:false,paused:false,created:Date.now()};rooms.set(id,room);
+ const res=join(socket,room,{name:nm});if(res.error){rooms.delete(id);cb?.(res);return;}
+ const st=start(room);cb?.({...res,...st});});
+socket.on('soloRestart',(_,cb)=>{const [r,p]=get(socket);if(!r?.practice||!p){cb?.({error:'혼자 연습 중일 때만 할 수 있습니다.'});return;}
+ r.started=false;p.solved.clear();p.correct=0;p.attempts=0;p.current=null;p.matchId=null;cb?.(start(r));});
+socket.on('leaveRoom',(_,cb)=>{const [r,p]=get(socket);if(r&&p){r.players.delete(p.id);socket.leave(r.id);socket.data.room=null;if(r.practice||r.players.size===0)rooms.delete(r.id);else broadcastLobby(r);}cb?.({ok:true});});
 socket.on('autoTeams',(_,cb)=>{const [r,p]=get(socket);if(!r||!p?.teacher||r.started){cb?.({error:'대기실에서 교사만 할 수 있습니다.'});return;}
  const students=[...r.players.values()].filter(x=>!x.teacher);let n=Math.max(1,Math.min(6,Math.ceil(students.length/5)));if(r.mode==='pvp'){n=Math.max(2,n%2?n+1:n);n=Math.min(6,n);}
  /* 섞어서 팀마다 고르게 (최대 5명) */

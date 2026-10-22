@@ -83,3 +83,6 @@ body{background:radial-gradient(circle at 50% 0%,#406d85,#15233c 65%,#101927)!im
 .quiz{border:3px solid #aa7846!important;background:#fff8e8!important}
 
 .connection{padding:6px 10px;border-radius:20px;font-size:12px;font-weight:800}.connection.connected{background:#e2f8ea;color:#157746}.connection.disconnected{background:#ffe7e7;color:#b32929}
+
+/* 혼자 연습 버튼 */
+.solo-btn{padding:12px 16px;font-weight:900}
