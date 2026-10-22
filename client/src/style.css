@@ -9,7 +9,7 @@ header{background:#202b37;color:#fff;border-bottom:5px solid #ffc54b;box-shadow:
 .brand small{color:#d9ebf5;font-weight:900;letter-spacing:1px}.brandicon{font-size:43px}
 .roomcode{background:#ffca4a;color:#27313c;border:2px solid #fff}
 .ghost{background:#34475b;color:#fff;border:2px solid #617489}
-.hero{background:linear-gradient(0deg,#15283da9,#23446335),url('/battle-preview.png') center / cover;border:5px solid #202e3d;box-shadow:0 12px 0 #1c2a38;padding:80px 32px 38px;min-height:470px}
+.hero{background:linear-gradient(0deg,#15283da9,#23446335);border:5px solid #202e3d;box-shadow:0 12px 0 #1c2a38;padding:80px 32px 38px;min-height:470px}
 .hero h2{color:#ffe174;text-shadow:3px 4px #162333,0 0 10px #152d39;font-size:clamp(26px,3.5vw,43px)}
 .hero p{font-weight:900;color:white;text-shadow:1px 2px #152333}
 .panel,.stat{border:3px solid #263543;box-shadow:0 5px 0 #263543;background:#fffdf7}
@@ -138,10 +138,202 @@ body:has(.ingame) .brand small,body:has(.ingame) footer{display:none}
 body:has(.ingame) header{padding:4px 12px;border-bottom-width:3px}
 body:has(.ingame) .headeractions .ghost,body:has(.ingame) .connection{padding:5px 10px;font-size:13px}
 .ingame .arena{position:relative;height:clamp(160px,37dvh,420px);background:#1d2f3a!important}
-.ingame .arena::before{content:"";position:absolute;inset:-30px;background:url('/remaster/stage1.webp') center/cover;filter:blur(16px) brightness(.7) saturate(1.1)}
+.ingame .arena::before{content:"";position:absolute;inset:-30px;background:url('/stage/s1.webp') center/cover;filter:blur(16px) brightness(.7) saturate(1.1)}
 .ingame .arena canvas{position:relative;z-index:1}
 .ingame .skillbar{padding:3px 8px}
 .ingame .skillbutton,.ingame .resetbtn{min-height:34px;padding:4px 12px;font-size:14px}
 .ingame .unitportrait{width:50px;height:50px}
 .ingame .unit{padding:3px 2px 4px}
 @media (max-aspect-ratio:1/1){.ingame .arena{height:auto;aspect-ratio:960/360}}
+
+/* ───────── 18단계: 새 디자인 (보내 준 UI 키트 기반) ───────── */
+header{background:linear-gradient(180deg,#2b3f63,#1b2840)!important;border-bottom:4px solid #ffc94a!important}
+.brand .logo{height:46px;width:auto;filter:drop-shadow(0 3px 2px #0006)}
+.brand .lesson{color:#ffe69a;font-weight:900;letter-spacing:1px;font-size:11px;background:#0005;border-radius:8px;padding:3px 8px}
+body:has(.ingame) .brand .logo{height:36px}
+.imgbtn{background:none;border:0;padding:0;cursor:pointer;touch-action:manipulation}
+.imgbtn img{height:46px;width:auto;display:block;filter:drop-shadow(0 3px 2px #0005)}
+.imgbtn:active{transform:translateY(2px)}
+.exitimg img{height:40px}
+body:has(.ingame) .exitimg img{height:34px}
+.endbtn{background:linear-gradient(#ff6b6b,#d63838)!important;color:#fff!important;border:3px solid #7a1b1b!important;font-weight:900}
+
+/* 전투 화면 + 위쪽 코인·시간 */
+.ingame .battlepanel{position:relative;border:4px solid #3b2a1e!important;border-radius:16px!important;box-shadow:0 5px 0 #24180f!important;background:#1d2f3a}
+.ingame .arena{height:clamp(170px,44dvh,470px)!important}
+.ingame .arena::before{background-image:url('/stage/s1.webp')!important}
+.hud-right{position:absolute;right:10px;top:8px;transform-origin:top right;z-index:3;display:flex;flex-direction:column;gap:6px;align-items:flex-end;pointer-events:none}
+.hud-pill{display:flex;align-items:center;gap:6px;background:linear-gradient(#2b3346,#151b28);color:#fff;border:3px solid #0d111b;border-radius:999px;padding:3px 14px 3px 4px;box-shadow:0 3px 0 #0008;font-weight:900}
+.hud-pill b{font-size:clamp(18px,2.1vw,26px);color:#ffd54a;line-height:1}
+.hud-pill small{font-size:13px;color:#e8ecf5}
+.coinpill img{width:clamp(26px,2.6vw,34px);height:auto}
+.timepill{padding-left:12px;font-size:16px}
+.timepill b{color:#fff}
+.ingame .bosswarning{top:auto;bottom:8px}
+
+/* 아래쪽 패널: 유닛 카드 + 발사 버튼 | 영어 문제 */
+.dock{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1.05fr;gap:10px}
+.dock-units{background:linear-gradient(180deg,#26334c,#151d2d);border:3px solid #0e1420;border-radius:16px;padding:8px;display:flex;gap:8px;align-items:stretch;min-height:0}
+.cardrow{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:7px;min-height:0}
+.ucard{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;padding:4px 3px 12px;border-radius:12px;border:3px solid #0d111b;background:linear-gradient(170deg,#fff4b8,#ffc53d 70%,#f39a1b);box-shadow:0 4px 0 #000a;min-height:0;overflow:hidden;touch-action:manipulation}
+.ucard:disabled{filter:grayscale(.65) brightness(.85);opacity:1}
+.ucard.ready{animation:ready 1.6s ease-in-out infinite}
+@keyframes ready{50%{box-shadow:0 4px 0 #000a,0 0 0 3px #fff6}}
+.ucard:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 #000a}
+.ucard .unitportrait{width:auto!important;height:clamp(38px,6.2dvh,62px)!important;object-fit:contain;filter:drop-shadow(0 3px 2px #0005)}
+.ucard .uname{font-size:clamp(10px,1.05vw,13px);font-weight:900;color:#3a2410;white-space:nowrap}
+.ucard .ucost{display:flex;align-items:center;gap:2px;font-weight:900;font-size:clamp(13px,1.3vw,17px);color:#fff;text-shadow:0 2px 0 #3a2410,0 0 3px #3a2410}
+.ucard .ucost img{width:18px}
+.ucard .ubar{position:absolute;left:8px;right:8px;bottom:4px;height:6px;background:#0d111b;border-radius:4px;overflow:hidden}
+.ucard .ubar i{display:block;height:100%;background:linear-gradient(90deg,#3cc8ff,#25a1f0);transition:width .2s}
+.dock-side{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:clamp(96px,11vw,140px)}
+.special{position:relative;background:none;border:0;padding:0;touch-action:manipulation}
+.special img{width:100%;max-width:130px;height:auto;filter:drop-shadow(0 4px 2px #0007)}
+.special span{position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);background:#151b28;color:#ffd54a;border:2px solid #000;border-radius:999px;padding:0 8px;font-weight:900;font-size:13px}
+.special:disabled{filter:grayscale(.8) brightness(.8)}
+.special:not(:disabled){animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.05)}}
+.iconbtn{display:flex;flex-direction:column;align-items:center;background:none;border:0;color:#fff;font-weight:800;gap:1px}
+.iconbtn img{width:42px}
+.iconbtn small{font-size:11px}
+.dock .skillmsg{color:#ffe69a;font-size:12px;font-weight:900;text-align:center}
+
+/* 영어 문제 판 */
+.quizpanel{position:relative;background:#fff8e6;border:5px solid #2d7fd6;border-radius:18px;box-shadow:0 5px 0 #1a4f8c;padding:44px 12px 10px;min-height:0;overflow:auto}
+.quizpanel .qhead{position:absolute;left:6px;top:-6px;height:56px;width:auto;pointer-events:none;filter:drop-shadow(0 2px 1px #0003)}
+.qtop{position:absolute;right:10px;top:8px;display:flex;gap:6px}
+.qdiff{background:#6b4423;color:#ffd54a;border-radius:999px;padding:2px 10px;font-weight:900;font-size:13px;border:2px solid #3b2410}
+.qreward{display:flex;align-items:center;gap:3px;background:#151b28;color:#ffd54a;border-radius:999px;padding:2px 10px;font-weight:900;font-size:13px}
+.qreward img{width:16px}
+.quizpanel .question{display:flex;gap:8px;align-items:center;margin:2px 0 8px;font-size:clamp(15px,1.65vw,20px);font-weight:900;color:#2a2a2a;background:none;border:0;padding:0;min-height:0}
+.quizpanel .paw{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#ff9f2e;color:#fff;font-size:14px;flex:none}
+.quizpanel .choices{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.quizpanel .choice{display:flex;align-items:center;gap:10px;min-height:46px;padding:5px 10px 5px 6px;text-align:left;border-radius:14px;border:3px solid #5d8fc7;background:linear-gradient(#e8f4ff,#cfe5fa);box-shadow:0 3px 0 #5d8fc7;font-weight:900;font-size:clamp(14px,1.45vw,18px);color:#1d2b45;touch-action:manipulation}
+.quizpanel .choice b{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#4fa6ff,#1559c9);color:#fff;border:2px solid #fff;box-shadow:0 0 0 2px #1559c9;margin:0;font-size:15px}
+.quizpanel .choice:hover:not(:disabled),.quizpanel .choice:active:not(:disabled){background:linear-gradient(#fff3b0,#ffd44a);border-color:#e6a417;box-shadow:0 3px 0 #c98a0a}
+.quizpanel .choice:hover:not(:disabled) b{background:radial-gradient(circle at 35% 30%,#ffc04d,#e08a00);box-shadow:0 0 0 2px #e08a00}
+.quizpanel .waiting{display:flex;flex-direction:column;align-items:center;gap:6px;padding:8px;color:#3b3b3b;font-weight:800}
+.resultbadge{height:58px;width:auto;animation:pop .35s ease-out}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.08)}100%{transform:scale(1)}}
+.quizpanel .finish{background:none;border:0;padding:6px;font-size:24px;color:#243c63}
+.quizpanel .finish .imgbtn img{height:44px}
+
+/* 가로 태블릿 기본 · 세로 태블릿 · 작은 화면 */
+@media (max-aspect-ratio:1/1){
+ .ingame .arena{height:auto!important;aspect-ratio:960/250}
+ .dock{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+ .cardrow{grid-template-columns:repeat(6,1fr)}
+}
+@media (max-width:600px),(max-height:520px){
+ .dock{grid-template-columns:1fr}
+ .cardrow{grid-template-columns:repeat(3,1fr)}
+}
+/* 첫 화면 타이틀 그림 */
+.hero2{border-radius:24px;overflow:hidden;border:5px solid #1b2840;box-shadow:0 10px 0 #1b2840,0 20px 40px #0003;background:#fff8e6;display:flex;flex-direction:column}
+.hero2 img{width:100%;display:block;aspect-ratio:1008/548;object-fit:cover}
+.hero2-text{padding:16px 18px;color:#2a3550}
+.hero2-text b{font-size:clamp(15px,1.6vw,19px);line-height:1.5}
+.hero2-text .pills{margin-top:10px}
+.hero2-text .pills span{background:#ffe9a6;color:#5a3a12;border:2px solid #e3b23b}
+.restartbtn{background:linear-gradient(#5db2ff,#2f7fd1);color:#fff;border:3px solid #0d2f5c;border-radius:12px;padding:5px 8px;font-weight:900;font-size:13px;box-shadow:0 3px 0 #0d2f5c;white-space:nowrap}
+.quizpanel{padding-top:52px}
+.quizpanel .qhead{height:60px;top:-8px}
+/* 교사 관제실도 같은 느낌으로 */
+.dashboard{border:4px solid #2d7fd6!important;box-shadow:0 5px 0 #1a4f8c!important}
+.dashboard h2{color:#1b2840}
+.overviewcard{background:linear-gradient(#fff8e6,#ffe9b0)!important;border:3px solid #6b4423!important;border-radius:14px!important}
+
+.ingame .hud-right{right:50%;transform:translateX(50%);top:auto;bottom:8px;flex-direction:row}
+.hero2{align-self:start}.hero2-text b{word-break:keep-all}
+@media (max-aspect-ratio:1/1){.ingame .arena{aspect-ratio:auto!important;height:clamp(200px,34dvh,520px)!important}.quizpanel .choice{min-height:64px}}
+
+/* ───────── 19단계: 레벨 · 스테이지 선택 · 상점 ───────── */
+.profbar{display:flex;align-items:center;gap:10px;background:linear-gradient(#26334c,#151d2d);border:3px solid #0e1420;border-radius:14px;padding:6px 10px;color:#fff}
+.profbar>img{width:46px;height:auto}
+.pinfo{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
+.pinfo b{color:#ffd54a;font-size:15px}
+.pinfo small{font-size:11px;color:#c9d6ea}
+.xpbar{display:block;height:9px;background:#0b0f18;border-radius:6px;overflow:hidden;border:1px solid #000}
+.xpbar>i{display:block;height:100%;background:linear-gradient(90deg,#ffe36b,#f5b400)}
+.pcoins{display:flex;align-items:center;gap:4px;background:#151b28;color:#ffd54a;font-weight:900;border-radius:999px;padding:3px 10px 3px 4px;border:2px solid #000;font-size:15px}
+.pcoins img{width:22px}
+.shopbtn{background:linear-gradient(#ffd56a,#f59e0b);border:3px solid #6b3b07;border-radius:12px;padding:6px 10px;font-weight:900;color:#3b1f02;box-shadow:0 3px 0 #6b3b07;white-space:nowrap}
+.lvbadge{position:absolute;left:10px;bottom:8px;z-index:3;display:flex;align-items:center;gap:6px;background:linear-gradient(#2b3346,#151b28);border:3px solid #0d111b;border-radius:999px;padding:2px 12px 2px 2px;color:#ffd54a;font-weight:900;pointer-events:none}
+.lvbadge img{width:34px}
+.lvbadge .xpbar{width:70px}
+.itembar{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%}
+.itembtn{position:relative;background:none;border:0;padding:0;touch-action:manipulation}
+.itembtn img{width:100%;max-width:52px;display:block;margin:auto;filter:drop-shadow(0 2px 1px #0007)}
+.itembtn b{position:absolute;right:2px;bottom:-2px;background:#e11d48;color:#fff;border:2px solid #fff;border-radius:999px;font-size:11px;min-width:18px;padding:0 4px}
+.itembtn:disabled{filter:grayscale(.85) brightness(.75)}
+.finish .resulttitle{font-size:40px;font-weight:900;-webkit-text-stroke:2px #3b1f02;paint-order:stroke fill}
+.finish .resulttitle.win{color:#ffd54a}.finish .resulttitle.lose{color:#9aa7c0}
+.finish .stars{font-size:38px;letter-spacing:4px}
+.finish .stars span{color:#c9c9c9}.finish .stars span.on{color:#ffc61a;text-shadow:0 2px 0 #b07800}
+.finish .rewards{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-size:16px;margin:6px 0}
+.finish .rewards span{display:flex;align-items:center;gap:4px;background:#fff;border:2px solid #e3b23b;border-radius:999px;padding:3px 12px}
+.finish .rewards img{width:20px}
+.finish .lvup{background:#ffe9a6!important;color:#b45309}
+.ovl{position:fixed;inset:0;background:#0b1424cc;z-index:50;display:grid;place-items:center;padding:14px}
+.ovlbox{width:min(1100px,100%);max-height:94dvh;overflow:auto;background:#fff8e6;border:5px solid #2d7fd6;border-radius:22px;box-shadow:0 8px 0 #1a4f8c;padding:14px 18px}
+.ovlhead{display:flex;align-items:center;gap:10px}
+.ovlhead h2{margin:0;flex:1;color:#1b2840}
+.xbtn{width:42px;height:42px;border-radius:50%;border:3px solid #7a1b1b;background:linear-gradient(#ff6b6b,#d63838);color:#fff;font-weight:900;font-size:18px}
+.ovlsub{color:#5b4a33;font-size:14px;margin:6px 0 10px}
+.stagegrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.stagecard{position:relative;border:4px solid #6b4423;border-radius:14px;overflow:hidden;padding:0;background:#fff;display:flex;flex-direction:column;box-shadow:0 4px 0 #3b2410;touch-action:manipulation}
+.stagecard img{width:100%;aspect-ratio:1152/300;object-fit:cover;display:block}
+.stagecard b{padding:4px 6px 0;font-size:14px;color:#3a2412}
+.stagecard .snum{position:absolute;left:6px;top:6px;background:#2d7fd6;color:#fff;border:2px solid #fff;border-radius:50%;width:28px;height:28px;display:grid;place-items:center;font-weight:900}
+.sstars{padding:0 6px 6px;font-size:20px}
+.sstars i{font-style:normal;color:#ccc}.sstars i.on{color:#ffc61a}
+.stagecard.locked{filter:grayscale(.9) brightness(.7)}
+.stagecard .lock{position:absolute;inset:0;display:grid;place-items:center;font-size:40px}
+.stagecard:not(:disabled):active{transform:translateY(3px)}
+.shopgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.shopitem{display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border:3px solid #e3b23b;border-radius:16px;padding:10px;text-align:center}
+.shopitem>img{width:90px}
+.shopitem b{font-size:17px;color:#3a2412}
+.shopitem small{color:#6b5a40;min-height:2.6em}
+.shopitem .own{font-size:13px;color:#2d7fd6;font-weight:800}
+.buybtn{display:flex;align-items:center;gap:4px;background:linear-gradient(#5ee06a,#22a83a);color:#fff;border:3px solid #145c22;border-radius:12px;padding:6px 14px;font-weight:900;box-shadow:0 3px 0 #145c22}
+.buybtn img{width:20px}
+.buybtn:disabled{filter:grayscale(.8)}
+.ddtoast{position:fixed;left:50%;top:18%;transform:translateX(-50%);z-index:60;background:#1b2840ee;color:#ffe69a;font-weight:900;font-size:22px;padding:12px 24px;border-radius:16px;border:3px solid #ffc94a;animation:pop .3s}
+@media (max-width:800px){.stagegrid{grid-template-columns:repeat(2,1fr)}.shopgrid{grid-template-columns:repeat(2,1fr)}}
+.stagecard.locked{filter:none}.stagecard.locked img,.stagecard.locked b,.stagecard.locked .sstars{filter:grayscale(.9) brightness(.75);opacity:.7}
+.stagecard .lock{font-size:44px;text-shadow:0 2px 4px #0008}
+.quizpanel .finish{padding:0}.finish .resulttitle{font-size:32px;line-height:1.1}.finish .stars{font-size:30px;line-height:1.1}
+.quizpanel .finish .actions{gap:6px}.quizpanel .finish .actions button{padding:7px 12px;font-size:15px;min-height:0}
+
+/* ───────── 20단계: 카드덱 · 캐릭터 카드 ───────── */
+.ucard{border-color:var(--rc,#0d111b)!important}
+.ucard .ulv{position:absolute;left:4px;top:3px;background:#151b28;color:#ffd54a;font-size:10px;font-weight:900;border-radius:6px;padding:0 5px}
+.deckbtn{background:linear-gradient(#a5b4fc,#6366f1)!important;border-color:#312e81!important;color:#fff!important;box-shadow:0 3px 0 #312e81!important}
+.tabs2{display:flex;gap:8px;margin:8px 0}
+.tabs2 button{flex:1;padding:8px;border-radius:12px;border:3px solid #6b4423;background:#fff;font-weight:900;color:#6b4423}
+.tabs2 button.on{background:linear-gradient(#ffd56a,#f59e0b);color:#3b1f02}
+.rolechip{position:absolute;left:6px;top:6px;background:var(--rc);color:#fff;font-size:11px;font-weight:900;border-radius:999px;padding:1px 8px;border:2px solid #fff}
+.lvchip{position:absolute;right:6px;top:6px;background:#151b28;color:#ffd54a;font-size:11px;font-weight:900;border-radius:999px;padding:1px 8px}
+.cardshop{position:relative;border-color:var(--rc)!important}
+.cardshop>img{width:96px!important}
+.deckbox{width:min(1200px,100%)}
+.deckslots{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;background:linear-gradient(#26334c,#151d2d);border:3px solid #0e1420;border-radius:14px;padding:8px;margin-bottom:10px}
+.slot{aspect-ratio:1/1.05;border:3px dashed #4b5b7a;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#7b8bab;font-size:30px;font-weight:900;cursor:pointer}
+.slot.full{border:3px solid var(--rc);background:linear-gradient(170deg,#fff4b8,#ffc53d);color:#3a2410}
+.slot img{width:72%;height:auto}.slot b{font-size:13px}.slot small{font-size:11px;color:#6b4423}
+.decklist{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.dcard{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;background:#fff;border:4px solid var(--rc);border-radius:16px;padding:26px 8px 8px;text-align:center}
+.dcard>img{width:96px;height:96px;object-fit:contain;cursor:pointer}
+.dcard.indeck{background:linear-gradient(#fffbea,#ffeaa3);box-shadow:0 0 0 3px #ffd54a}
+.dcard.locked>img{filter:grayscale(1) brightness(.7)}
+.dcard b{font-size:16px;color:#2a1a0a}
+.dcard .stats{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;font-size:11px;font-weight:800}
+.dcard .stats span{display:flex;align-items:center;gap:2px;background:#f3efe4;border-radius:999px;padding:1px 6px}
+.dcard .stats img{width:12px}
+.dcard .dd{font-size:11px;color:#6b5a40;min-height:3.2em}
+.dbtns{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
+.dbtns button{border-radius:10px;padding:4px 8px;font-weight:900;font-size:12px;border:2px solid #1b2840;display:flex;align-items:center;gap:2px}
+.dbtns .in{background:#5ee06a;color:#0b3d14}.dbtns .out{background:#fca5a5;color:#7f1d1d}.dbtns .up{background:#ffd54a;color:#3b1f02}.dbtns .up img{width:13px}
+.dbtns .max{font-weight:900;color:#e11d48}
+@media (max-width:900px){.decklist{grid-template-columns:repeat(2,1fr)}.deckslots{grid-template-columns:repeat(3,1fr)}}
