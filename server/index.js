@@ -5,9 +5,13 @@ const app=express();const server=http.createServer(app);const io=new Server(serv
 app.use(express.json({limit:'4mb'}));app.get('/api/health',(req,res)=>res.json({ok:true,rooms:rooms.size,version:'17.0.0'}));app.get('/api/units',(req,res)=>res.json(TYPES));
 app.get('/api/status',(req,res)=>res.json({version:'17.0.0',activeRooms:rooms.size,connectedSockets:io.engine.clientsCount,uptimeSeconds:Math.floor(process.uptime())}));
 app.use(express.static(path.join(ROOT,'dist')));
+/* 화면 파일(dist)이 없을 때(빌드를 안 했을 때) 빈 화면 대신 안내 */
+app.get('/',(req,res)=>res.status(503).type('html').send('<meta charset="utf-8"><body style="font-family:sans-serif;padding:30px;line-height:1.8"><h2>🐕 댕댕대작전: 화면 파일이 아직 없어요</h2><p>서버는 켜져 있지만 화면(dist)을 만들지 않았어요.</p><ul><li>교실 컴퓨터: <b>Windows_실행.bat</b>로 실행하고 <b>http://localhost:5173</b>으로 들어가세요.</li><li>Render: Build Command를 <code>npm install &amp;&amp; npm run build</code>로 바꾸고 다시 배포하세요.</li></ul></body>'));
 const code=()=>Math.random().toString(36).slice(2,8).toUpperCase();
 const token=()=>randomBytes(24).toString('hex');
-const pinOk=(pin)=>{const expected=String(process.env.TEACHER_PIN||'').trim();if(!expected)return false;const a=Buffer.from(String(pin||''));const b=Buffer.from(expected);return a.length===b.length&&timingSafeEqual(a,b)};
+/* 교사 PIN: 서버 설정(TEACHER_PIN)이 없으면 기본값 123456 (Windows_실행.bat와 같음). 수업 전에 꼭 바꾸세요. */
+const DEFAULT_PIN='123456';if(!String(process.env.TEACHER_PIN||'').trim())console.warn('[주의] TEACHER_PIN이 설정되지 않아 기본 PIN 123456을 사용합니다. 수업 전에 바꾸세요.');
+const pinOk=(pin)=>{const expected=String(process.env.TEACHER_PIN||'').trim()||DEFAULT_PIN;if(!expected)return false;const a=Buffer.from(String(pin||''));const b=Buffer.from(expected);return a.length===b.length&&timingSafeEqual(a,b)};
 function createRoom(socket,{name,mode='solo',pin}={}){
  if(!pinOk(pin))return {error:'교사 PIN이 올바르지 않습니다. 서버의 TEACHER_PIN 설정을 확인하세요.'};
  let id=code();while(rooms.has(id))id=code();
