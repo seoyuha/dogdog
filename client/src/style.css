@@ -86,3 +86,62 @@ body{background:radial-gradient(circle at 50% 0%,#406d85,#15233c 65%,#101927)!im
 
 /* 혼자 연습 버튼 */
 .solo-btn{padding:12px 16px;font-weight:900}
+
+/* ───────── 17단계: 태블릿 한 화면 배치 (전투 화면·문제가 한눈에) ───────── */
+body:has(.ingame) header{padding:6px 14px}
+body:has(.ingame) .brandicon{font-size:26px}
+body:has(.ingame) .brand h1{font-size:20px}
+body:has(.ingame) .brand small,body:has(.ingame) footer{display:none}
+.game.ingame{max-width:1400px;padding:8px 10px;height:calc(100dvh - 54px);display:flex;flex-direction:column;gap:8px;overflow:hidden}
+.ingame .topstats,.ingame .battlemission{display:none}
+.ingame .battlepanel{flex:none;border-width:3px!important;border-radius:16px!important;box-shadow:0 4px 0 #392a2b!important}
+.ingame .battlehead{padding:5px 12px;font-size:14px;flex-wrap:nowrap;justify-content:space-between;gap:6px}
+.ingame .battlehead span{font-size:clamp(11px,1.25vw,15px)}
+.ingame .arena{height:clamp(170px,40dvh,430px);aspect-ratio:auto;width:100%;border-radius:0!important}
+.ingame .bosswarning{top:40px}
+.ingame .skillbar{flex:none;margin:0;padding:5px 10px;gap:8px;flex-wrap:nowrap;border-radius:12px}
+.ingame .skillbar small{display:none}
+.ingame .skillbutton{min-height:40px;padding:6px 14px;width:auto}
+.ingame .skillmsg{font-size:13px;color:#ffe9a0}
+.resetbtn{margin-left:auto;background:#fff;border:3px solid #23354a;border-radius:12px;padding:6px 14px;min-height:40px;font-weight:900;color:#23354a;touch-action:manipulation}
+.ingame .bottomgrid{flex:1;min-height:0;margin:0;gap:10px;grid-template-columns:1fr 1.15fr}
+.ingame .bottomgrid .panel{padding:8px 12px;overflow:auto;min-height:0}
+.ingame .units h3,.ingame .quiz h3{font-size:15px;margin:0 0 6px}
+.ingame .unitgrid{gap:7px}
+.ingame .unit{min-height:0!important;padding:4px 2px 6px;gap:1px}
+.ingame .unitportrait{width:58px;height:58px}
+.ingame .unit b{font-size:12px}
+.ingame .unit small{font-size:11px;padding:1px 8px}
+.ingame .hint{display:none}
+.ingame .quiztitle{margin-bottom:2px}
+.ingame .question{font-size:clamp(15px,1.6vw,19px);padding:8px 12px;min-height:0;margin:4px 0 8px;line-height:1.4}
+.ingame .choices{gap:7px}
+.ingame .choices button{min-height:46px;padding:7px 10px;font-size:clamp(13px,1.4vw,16px)}
+.ingame .waiting{padding:14px}
+.ingame .finish{padding:12px;font-size:22px}
+.ingame .finish .actions{margin-top:8px;gap:8px}
+.exitbtn{white-space:nowrap}
+/* 세로 태블릿: 유닛은 한 줄, 문제는 아래 */
+@media (max-aspect-ratio:1/1){
+ .ingame .arena{height:clamp(160px,28dvh,330px)}
+ .ingame .bottomgrid{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+ .ingame .unitgrid{grid-template-columns:repeat(6,1fr)}
+ .ingame .unitportrait{width:52px;height:52px}
+}
+/* 휴대폰처럼 아주 작은 화면은 스크롤 허용 */
+@media (max-width:600px),(max-height:520px){
+ .game.ingame{height:auto;overflow:visible}
+ .ingame .bottomgrid{grid-template-columns:1fr}
+ .ingame .unitgrid{grid-template-columns:repeat(3,1fr)}
+}
+/* 17단계 보정: 헤더·버튼을 줄이고, 전투 화면 양옆은 배경을 흐리게 채워요 */
+body:has(.ingame) header{padding:4px 12px;border-bottom-width:3px}
+body:has(.ingame) .headeractions .ghost,body:has(.ingame) .connection{padding:5px 10px;font-size:13px}
+.ingame .arena{position:relative;height:clamp(160px,37dvh,420px);background:#1d2f3a!important}
+.ingame .arena::before{content:"";position:absolute;inset:-30px;background:url('/remaster/stage1.webp') center/cover;filter:blur(16px) brightness(.7) saturate(1.1)}
+.ingame .arena canvas{position:relative;z-index:1}
+.ingame .skillbar{padding:3px 8px}
+.ingame .skillbutton,.ingame .resetbtn{min-height:34px;padding:4px 12px;font-size:14px}
+.ingame .unitportrait{width:50px;height:50px}
+.ingame .unit{padding:3px 2px 4px}
+@media (max-aspect-ratio:1/1){.ingame .arena{height:auto;aspect-ratio:960/360}}

@@ -2,8 +2,8 @@ import {randomBytes,timingSafeEqual} from 'node:crypto';
 import express from 'express';import http from 'node:http';import {Server} from 'socket.io';import {createBattle,spawn,tick,snapshot,TYPES,setPlayers} from './engine.js';import {bank,parseQuestions,publicQuestion,selectQuestion,shuffled} from './questions.js';import path from 'node:path';import {fileURLToPath} from 'node:url';
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const app=express();const server=http.createServer(app);const io=new Server(server,{cors:{origin:true}});const rooms=new Map();
-app.use(express.json({limit:'4mb'}));app.get('/api/health',(req,res)=>res.json({ok:true,rooms:rooms.size,version:'16.0.0'}));app.get('/api/units',(req,res)=>res.json(TYPES));
-app.get('/api/status',(req,res)=>res.json({version:'16.0.0',activeRooms:rooms.size,connectedSockets:io.engine.clientsCount,uptimeSeconds:Math.floor(process.uptime())}));
+app.use(express.json({limit:'4mb'}));app.get('/api/health',(req,res)=>res.json({ok:true,rooms:rooms.size,version:'17.0.0'}));app.get('/api/units',(req,res)=>res.json(TYPES));
+app.get('/api/status',(req,res)=>res.json({version:'17.0.0',activeRooms:rooms.size,connectedSockets:io.engine.clientsCount,uptimeSeconds:Math.floor(process.uptime())}));
 app.use(express.static(path.join(ROOT,'dist')));
 const code=()=>Math.random().toString(36).slice(2,8).toUpperCase();
 const token=()=>randomBytes(24).toString('hex');
@@ -69,6 +69,16 @@ socket.on('soloPlay',(data,cb)=>{const nm=String(data?.name||'').trim().slice(0,
 socket.on('soloRestart',(_,cb)=>{const [r,p]=get(socket);if(!r?.practice||!p){cb?.({error:'혼자 연습 중일 때만 할 수 있습니다.'});return;}
  r.started=false;p.solved.clear();p.correct=0;p.attempts=0;p.current=null;p.matchId=null;cb?.(start(r));});
 socket.on('leaveRoom',(_,cb)=>{const [r,p]=get(socket);if(r&&p){r.players.delete(p.id);socket.leave(r.id);socket.data.room=null;if(r.practice||r.players.size===0)rooms.delete(r.id);else broadcastLobby(r);}cb?.({ok:true});});
+/* 🔄 개인전: 학생이 자기 전투만 처음부터 */
+socket.on('restartMine',(_,cb)=>{const [r,p]=get(socket);if(!r||!p||p.teacher||!r.started||r.mode!=='solo'||!p.matchId){cb?.({error:'개인전에서만 혼자 다시 시작할 수 있어요.'});return;}
+ const b=createBattle('solo',2);setPlayers(b,1);b.started=true;b.teams[1].gold=9999;if(r.paused)b.paused=true;r.matches.set(p.matchId,b);p.current=null;
+ socket.emit('matchReady',{side:0,matchId:p.matchId});sendQuestion(socket,p);cb?.({ok:true});});
+/* 🔄 교사: 모든 전투를 처음부터 다시 */
+socket.on('restartAll',(_,cb)=>{const [r,p]=get(socket);if(!r||!p?.teacher){cb?.({error:'교사만 할 수 있어요.'});return;}
+ r.started=false;r.matches.clear();for(const q of r.players.values()){q.current=null;q.matchId=null;}cb?.(start(r));});
+/* ⏹ 교사: 방 닫기 → 학생들도 처음 화면으로 */
+socket.on('closeRoom',(_,cb)=>{const [r,p]=get(socket);if(!r||!p?.teacher){cb?.({error:'교사만 할 수 있어요.'});return;}
+ io.to(r.id).except(socket.id).emit('roomClosed');for(const q of r.players.values()){const s=io.sockets.sockets.get(q.id);if(s){s.leave(r.id);s.data.room=null;}}rooms.delete(r.id);cb?.({ok:true});});
 socket.on('autoTeams',(_,cb)=>{const [r,p]=get(socket);if(!r||!p?.teacher||r.started){cb?.({error:'대기실에서 교사만 할 수 있습니다.'});return;}
  const students=[...r.players.values()].filter(x=>!x.teacher);let n=Math.max(1,Math.min(6,Math.ceil(students.length/5)));if(r.mode==='pvp'){n=Math.max(2,n%2?n+1:n);n=Math.min(6,n);}
  /* 섞어서 팀마다 고르게 (최대 5명) */
