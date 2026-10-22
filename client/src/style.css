@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap');
+:root{font-family:'Nunito','Noto Sans KR',sans-serif;color:#273c5d;background:#f4f6ff}*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button{cursor:pointer;transition:.15s}button:disabled{opacity:.42;cursor:not-allowed}button:hover:not(:disabled){filter:brightness(1.04);transform:translateY(-1px)}.app{min-height:100vh;background:linear-gradient(155deg,#edf1ff,#fcf4f7 65%,#f0fafb)}header{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border-bottom:1px solid #e3e6f3;padding:13px max(16px,calc((100vw - 1260px)/2));box-shadow:0 4px 20px #273c5d0a}.brand{display:flex;align-items:center;gap:10px}.brandicon{font-size:38px}.brand h1{margin:0;font-size:22px;letter-spacing:.5px;font-weight:900;color:#394c83}.brand small{font-size:10px;letter-spacing:2px;color:#9ca8c2}.headeractions{display:flex;align-items:center;gap:10px}.roomcode{background:#f1ecff;padding:8px 12px;border-radius:10px;font-weight:900;color:#7960a4}.ghost,.secondary{background:#eef1ff;color:#536b9a;border:0;border-radius:10px;padding:11px 16px;font-weight:800}.primary{background:linear-gradient(100deg,#7d79e7,#bc78bf);color:white;border:0;border-radius:12px;padding:13px 20px;font-weight:900;box-shadow:0 4px 13px #8479cc44}.danger{background:#ffedf0;border:0;border-radius:10px;padding:12px 18px;color:#c84d65;font-weight:800}.welcome{max-width:1050px;margin:55px auto;display:grid;grid-template-columns:1.15fr .85fr;gap:28px;padding:0 18px}.hero{background:linear-gradient(145deg,#566bb7,#a27bca);border-radius:28px;color:white;padding:55px 35px;box-shadow:0 20px 45px #6679ae33}.heroicons{font-size:65px}.hero h2{font-size:37px;line-height:1.3;margin:16px 0}.hero p{line-height:1.8;color:#f5edff}.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px}.pills span{background:#ffffff30;border:1px solid #ffffff55;padding:8px 11px;border-radius:22px;font-size:12px;font-weight:800}.panel{background:white;border:1px solid #e4e8f4;border-radius:20px;padding:22px;box-shadow:0 9px 25px #273c5d0a}.login{display:flex;flex-direction:column;gap:12px}.panel h3{margin:0 0 10px;font-size:19px}.login label,.teachercontrols label{font-size:12px;font-weight:800;color:#657595}.login input,.login select,.teachercontrols select,.teachercontrols input{border:1px solid #dfe4f1;border-radius:10px;padding:12px;background:#fafbff;width:100%;color:#324365}.line{height:1px;background:#e7eaf4;margin:8px 0}.notice{background:#fff4d9;color:#866527;padding:11px;border-radius:9px;font-size:13px}.game{max-width:1260px;margin:0 auto;padding:20px 16px}.topstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.stat{background:white;border:1px solid #e6e9f4;border-radius:14px;padding:12px 18px;display:flex;flex-direction:column;gap:3px}.stat small{font-size:11px;color:#8390ac}.stat b{font-size:19px;color:#40527e}.battlepanel{border-radius:19px;overflow:hidden;background:#d6e7f7;border:5px solid #fff;box-shadow:0 8px 24px #526d9e25}.battlehead{display:flex;justify-content:space-between;background:#344b7b;color:white;font-weight:800;font-size:14px;padding:12px 20px;gap:10px}.arena{width:100%;aspect-ratio:960/360;overflow:hidden}.arena canvas{display:block!important}.bottomgrid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:15px}.unitgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.unit{display:flex;flex-direction:column;align-items:center;gap:5px;border:1px solid #dce4f2;border-radius:13px;background:#f7f9ff;padding:11px 3px;color:#354971}.unit span{font-size:32px}.unit b{font-size:12px}.unit small{color:#8c6fa5;font-weight:800}.hint{font-size:12px;color:#8b98af;line-height:1.6}.quiztitle{display:flex;justify-content:space-between;gap:10px;align-items:center}.reward{background:#fff0cd;border-radius:15px;padding:5px 10px;color:#9c7525;font-size:12px;font-weight:900}.question{font-size:18px;font-weight:800;line-height:1.55;min-height:45px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choices button{border:1px solid #e1e5f2;background:#f8f9fe;color:#33466d;border-radius:10px;text-align:left;padding:13px;font-size:14px;min-height:57px}.choices b{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;width:23px;height:23px;background:#e7e9fa;margin-right:7px;color:#6575a5}.waiting{padding:30px;text-align:center;color:#8895ad}.finish{text-align:center;font-size:35px;font-weight:900;color:#a074c1;padding:30px}.finish p{font-size:15px;color:#8a95ab}.lobby{max-width:900px;margin:auto}.lobby h2{margin-top:0}.players{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:9px;margin:18px 0}.player{border:1px solid #e3e7f2;border-radius:11px;padding:10px;display:flex;justify-content:space-between;align-items:center;gap:7px;font-size:13px}.player span:last-child{color:#6e7f9d}.player select{max-width:82px;padding:5px;border:1px solid #d7dded;border-radius:8px}.teachercontrols{display:flex;flex-direction:column;gap:10px;max-width:550px}.dashboard h2{margin:0 0 16px}.actions{display:flex;gap:10px}.overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:18px 0}.overviewcard{background:#f7f8ff;border:1px solid #e5e9f5;border-radius:14px;padding:17px;display:flex;flex-direction:column;gap:9px}.overviewcard small{color:#8290a9}.overviewcard div{font-size:18px;font-weight:900}.overviewcard span{font-size:11px;color:#999}footer{text-align:center;color:#a3aec3;font-size:11px;padding:25px}@media(max-width:760px){header{padding:10px}.brand h1{font-size:15px}.brand small{font-size:8px}.brandicon{font-size:25px}.ghost{padding:8px;font-size:11px}.welcome{grid-template-columns:1fr;margin:18px auto}.hero{padding:28px}.hero h2{font-size:25px}.heroicons{font-size:40px}.topstats{grid-template-columns:repeat(2,1fr);gap:7px}.stat{padding:8px 10px}.stat b{font-size:15px}.bottomgrid{grid-template-columns:1fr}.battlehead{font-size:10px;padding:10px 5px}.panel{padding:14px}.choices button{font-size:12px;padding:10px}.question{font-size:16px}.unit span{font-size:25px}.unit b{font-size:11px}}
+
+/* Stage 2: DaengDaeng Battle visual refresh */
+:root{color:#242e39;background:#d5ecf9}
+.app{background:linear-gradient(180deg,#a8defa 0%,#e7f6fc 45%,#fff0d3 100%)}
+header{background:#202b37;color:#fff;border-bottom:5px solid #ffc54b;box-shadow:0 5px 0 #17202b}
+.brand h1{color:#ffd24e;font-size:clamp(19px,2.5vw,30px);text-shadow:2px 3px #121b25;letter-spacing:-.6px}
+.brand small{color:#d9ebf5;font-weight:900;letter-spacing:1px}.brandicon{font-size:43px}
+.roomcode{background:#ffca4a;color:#27313c;border:2px solid #fff}
+.ghost{background:#34475b;color:#fff;border:2px solid #617489}
+.hero{background:linear-gradient(0deg,#15283da9,#23446335),url('/battle-preview.png') center / cover;border:5px solid #202e3d;box-shadow:0 12px 0 #1c2a38;padding:80px 32px 38px;min-height:470px}
+.hero h2{color:#ffe174;text-shadow:3px 4px #162333,0 0 10px #152d39;font-size:clamp(26px,3.5vw,43px)}
+.hero p{font-weight:900;color:white;text-shadow:1px 2px #152333}
+.panel,.stat{border:3px solid #263543;box-shadow:0 5px 0 #263543;background:#fffdf7}
+.primary{background:linear-gradient(#ffe57a,#f9b72d);color:#26313e;border:3px solid #27313c;box-shadow:0 4px 0 #25313e;text-shadow:none}
+.secondary{background:#b8e7f7;color:#23394b;border:2px solid #263543}
+.stat b{color:#172d40}.stat small{color:#586b7d;font-weight:800}
+.battlepanel{border:5px solid #263543;box-shadow:0 7px 0 #263543;background:#b4e5fa}
+.battlehead{background:#202e3b;color:#fff0b5;font-size:clamp(10px,1.3vw,16px)}
+.unit{border:3px solid #27323e;border-radius:12px;background:linear-gradient(#fff5c7,#ffd45d);box-shadow:0 4px 0 #27323e}
+.unit:hover:not(:disabled){background:#ffe9a0}.unit b{color:#28313b}.unit small{color:#5a4535}
+.choices button{border:2px solid #334455;background:#e8f3f9;font-weight:800;box-shadow:0 2px 0 #334455}
+.choices button:hover:not(:disabled){background:#ffe282}
+.reward{background:#ffe174;border:2px solid #27313d;color:#43331b}
+@media(max-width:760px){.hero{min-height:350px;padding:35px 20px}.brandicon{font-size:29px}.brand h1{font-size:18px}.unitgrid{grid-template-columns:repeat(3,1fr)}}
+
+/* Stage 4: high-contrast battle HUD and tablet-friendly controls */
+.battlepanel{border:6px solid #202b40;border-radius:23px;box-shadow:0 10px 0 #121b2b,0 20px 36px #1a284344}.battlehead{background:linear-gradient(100deg,#17283e,#344767,#17283e);color:#ffe99b;text-shadow:0 2px 2px #0008;letter-spacing:.2px}.unit{position:relative;overflow:hidden;min-height:108px;transition:transform .12s,filter .12s}.unit:active:not(:disabled){transform:translateY(4px)!important;box-shadow:0 0 0 #27323e}.unit::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,transparent 15%,#fff6 50%,transparent 80%);transform:translateX(-120%);transition:transform .45s}.unit:hover::after{transform:translateX(120%)}.choices button{border:2px solid #cbd5e8;box-shadow:0 3px 0 #a6b5d0}.choices button:active{transform:translateY(2px);box-shadow:0 1px 0 #a6b5d0}.stat{border:2px solid #e1e6f1}.arena{background:#bce9f8}@media(max-width:760px){.unit{min-height:91px}.battlepanel{border-width:3px}.battlehead{flex-wrap:wrap;justify-content:center;gap:8px}}
+
+/* Stage 5: polished anime-inspired unit art, special ability and mobile HUD */
+.unitportrait{width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 4px 2px #27323e44);transition:transform .2s}.unit:hover:not(:disabled) .unitportrait{transform:scale(1.12) rotate(-3deg)}.unit{min-height:132px;background:linear-gradient(160deg,#fff8db,#ffd66e 80%,#e9ac3b);border-radius:17px}.unit b{font-size:12px}.skillbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:15px;padding:12px 18px;background:linear-gradient(105deg,#24324b,#3c5376);border:3px solid #121b2b;border-radius:17px;color:#fff4d2;box-shadow:0 5px 0 #111a2a}.skillbar>div{display:flex;flex-direction:column;gap:2px}.skillbar small{font-size:11px;color:#c9dbef}.skillbutton{background:linear-gradient(#fff4a6,#ffbd39);border:3px solid #141c2a;box-shadow:0 3px 0 #10192b;border-radius:12px;padding:11px 18px;font-weight:900;color:#303342}.skillbutton strong{margin-left:10px;font-size:12px}.skillmsg{font-size:12px;color:#ffe2a1}.battlehead span{white-space:nowrap}@media(max-width:760px){.unitportrait{width:49px;height:49px}.unit{min-height:105px}.skillbar{padding:10px}.skillbutton{width:100%}.battlehead span{font-size:10px}}
+
+/* Stage 6 — arcade polish, accessible responsive layout */
+.app{background:radial-gradient(ellipse at 15% 15%,#d6f6ff 0%,transparent 45%),linear-gradient(160deg,#b4e4fa 0%,#f2f8fc 52%,#ffe9b4 100%)}
+header{position:relative;z-index:3;background:linear-gradient(110deg,#182a40,#293e58 70%,#1b2d42);border-bottom:5px solid #ffc23b}
+.brandicon{filter:drop-shadow(0 3px 0 #101b2a)}
+.topstats .stat{background:linear-gradient(165deg,#fffef4,#f4f7fb);border:2px solid #283c50;border-radius:14px;box-shadow:0 4px 0 #253647}
+.stat b{font-size:clamp(15px,2vw,22px)}
+.battlepanel{position:relative;overflow:hidden;border-radius:22px;background:#a8d9f5}
+.battlehead{padding:13px 18px;font-weight:900}
+.bosswarning{position:absolute;left:50%;top:65px;transform:translateX(-50%);z-index:2;padding:7px 16px;background:#c72e47;color:#fff;border:3px solid #fff;border-radius:50px;font-size:12px;font-weight:900;box-shadow:0 3px 0 #5e2133;pointer-events:none;animation:bossPulse 1.2s infinite alternate}
+@keyframes bossPulse{to{filter:brightness(1.25);scale:1.03}}
+.battlemission{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:#fff6d8;border:3px solid #29384c;border-radius:15px;padding:12px 18px;margin-top:14px;box-shadow:0 4px 0 #253548;font-size:13px;color:#34445a}
+.battlemission b{font-size:15px}.battlemission span{flex:1}.battlemission strong{background:#29384c;color:#ffdc7e;border-radius:9px;padding:6px 10px;white-space:nowrap}
+.bottomgrid .panel{background:linear-gradient(180deg,#fffefb,#fff7e5);border-radius:20px}
+.unitgrid{gap:10px}.unit{background:linear-gradient(160deg,#fffaf0 0%,#ffdf87 80%,#ffb944 100%);box-shadow:0 5px 0 #27323e;min-height:139px;touch-action:manipulation}
+.unit:disabled{filter:grayscale(.55);opacity:.58}
+.unitportrait{width:72px;height:72px}.unit b{font-size:12px}.unit small{background:#29394c;color:#ffdd8a;border-radius:7px;padding:3px 9px}
+.quiz{position:relative}.quizbadge{font-size:10px;letter-spacing:1px;background:#293b53;color:#ffdb6a;padding:5px 8px;border-radius:7px;vertical-align:middle;white-space:nowrap}
+.question{padding:15px;background:#f4faff;border-left:5px solid #4c8ab8;border-radius:10px;min-height:75px}
+.choices button{min-height:65px;background:linear-gradient(#fff,#eaf3fb);border:2px solid #30445b;border-radius:12px;box-shadow:0 4px 0 #30445b;touch-action:manipulation}
+.choices button:hover:not(:disabled){background:#ffe5a3}.choices button:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 #30445b}
+.skillbutton{min-height:53px;touch-action:manipulation}
+@media(max-width:760px){.battlemission{font-size:11px;padding:9px}.battlemission span{flex-basis:60%}.unitportrait{width:54px;height:54px}.unit{min-height:113px}.choices button{min-height:60px}.bosswarning{font-size:10px;top:55px;white-space:nowrap}.quizbadge{display:none}}
+@media(prefers-reduced-motion:reduce){.bosswarning{animation:none}button,.unitportrait{transition:none}}
+
+/* Stage 8 — original high-resolution vector character art and premium HUD */
+:root{font-family:'Nunito','Noto Sans KR',sans-serif}
+.app{background:radial-gradient(circle at 50% 10%,#d5f6ff 0%,#b0e4f8 35%,#fff0c7 100%)}
+.battlepanel{box-shadow:0 8px 0 #162b3c,0 20px 48px #193b5d6b;border-color:#203247}
+.battlehead{background:linear-gradient(105deg,#19273c,#345e76 52%,#19273c);border-bottom:3px solid #ffe58a;font-size:clamp(11px,1.5vw,17px)}
+.panel{background:linear-gradient(165deg,#fffefa,#fff7df);border-color:#28374b;box-shadow:0 5px 0 #28374b,0 10px 20px #17294028}
+.unit{background:linear-gradient(170deg,#fffbe3,#ffcf69);box-shadow:0 5px 0 #24374c;min-height:154px;border-radius:16px}
+.unitportrait{width:94px;height:94px;object-fit:contain;filter:drop-shadow(0 5px 2px #20304936);transition:transform .18s}
+.unit:hover:not(:disabled) .unitportrait{transform:translateY(-5px) rotate(-3deg) scale(1.08)}
+.unit b{font-size:13px;font-weight:900}.unit small{background:#233b54;color:#ffe19b}
+.skillbar{background:linear-gradient(95deg,#1e3450,#355c79);border:3px solid #15283c;color:white;border-radius:16px}
+.skillbutton{background:linear-gradient(#ffe88e,#ffb93f);border:3px solid #23354a;color:#23354a;font-weight:900}
+.quiz .question{background:linear-gradient(130deg,#fff,#e9f7ff);border-left:6px solid #ffba41}
+.choices button{border-color:#3a5267;min-height:67px}.choices button:hover:not(:disabled){background:#fff0ad}
+.hero{background-position:center;box-shadow:0 12px 0 #1b2b40,0 24px 42px #152b4c44}
+@media(max-width:760px){.unitportrait{width:67px;height:67px}.unit{min-height:128px}}
+
+/* Stage 9: battle result polish */
+.arena{overflow:hidden;border-radius:0 0 12px 12px}.battlepanel{background:#a5d5f5}.finish{font-weight:900;font-size:26px;color:#243c63;text-align:center;background:linear-gradient(120deg,#fff0ad,#f7faff);padding:25px;border:3px solid #243c63;border-radius:15px}.finish p{font-size:13px}.battlemission{background:linear-gradient(110deg,#fff6d7,#e7f7ff)}
+/* Stage 11: illustrated remaster */
+body{background:radial-gradient(circle at 50% 0%,#406d85,#15233c 65%,#101927)!important}
+.battlepanel{border:5px solid #7e563d!important;box-shadow:0 12px 0 #392a2b,0 22px 50px #10152077!important;border-radius:20px!important;overflow:hidden}
+.arena{background:#253d47!important}
+.unit{background:linear-gradient(160deg,#fff6df,#e8d5b4)!important;border:3px solid #8c6847!important;border-radius:13px!important}
+.unitportrait{image-rendering:auto;filter:drop-shadow(0 3px 3px #372d3266)}
+.quiz{border:3px solid #aa7846!important;background:#fff8e8!important}
+
+.connection{padding:6px 10px;border-radius:20px;font-size:12px;font-weight:800}.connection.connected{background:#e2f8ea;color:#157746}.connection.disconnected{background:#ffe7e7;color:#b32929}

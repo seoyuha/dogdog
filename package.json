@@ -1,6 +1,6 @@
 {
-  "name": "daengdaeng-battle-stage9",
-  "version": "9.0.0",
+  "name": "daengdaeng-battle-stage16",
+  "version": "16.0.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,10 @@
     "server": "node server/index.js",
     "client": "vite --host 0.0.0.0 --port 5173",
     "build": "vite build",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "test": "node --test tests/*.test.js",
+    "test:load": "node tests/load30.mjs",
+    "test:security": "node --test tests/security.test.js"
   },
   "dependencies": {
     "concurrently": "^9.1.2",
