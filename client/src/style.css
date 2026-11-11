@@ -434,3 +434,7 @@ body:has(.start-screen) footer{display:none}
 .sscreen .s-student{top:43.7%;height:11%}
 .sscreen .s-how{top:61.9%;height:11.2%}
 .sscreen .s-teacher{top:79.4%;height:11.6%}
+/* 22-4: 버튼 3개를 세로로 늘려 패널을 채움 */
+.sscreen .s-student{top:43.7%;height:15.4%}
+.sscreen .s-how{top:60.4%;height:14.9%}
+.sscreen .s-teacher{top:75.7%;height:15.2%}
