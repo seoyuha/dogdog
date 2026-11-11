@@ -452,3 +452,156 @@ body:has(.start-screen) footer{display:none}
 .autonext{margin:10px auto 0;max-width:420px;background:#eef7ff;border:2px solid #7fb2ec;border-radius:14px;padding:10px 14px;display:flex;flex-direction:column;gap:4px;position:relative;overflow:hidden;text-align:center}
 .autonext b{color:#1d4a85;font-size:16px}.autonext small{color:#3b5f8f;font-weight:700}
 .autonext i{position:absolute;left:0;bottom:0;height:5px;background:linear-gradient(90deg,#ffd23f,#ff9f1c);transition:width .3s linear}
+
+/* ═══════════ 23단계: 새 그래픽 테마 (첨부 시안 기반 — 첫 화면 제외 전체) ═══════════ */
+:root{--gold1:#ffd447;--gold2:#f0a51b;--gold3:#a8620c;--navy:#1d2c52;--navy2:#2c4277;--wood1:#b8743a;--wood2:#7a4419;--parch:#fff7e2;--blue1:#e3f2ff;--blue2:#bcdcfb;--blueb:#4f8fd8}
+/* 배경: 하늘 + 풀밭 */
+body:not(:has(.start-screen)){background:linear-gradient(180deg,#8fd3ff 0%,#c9ecff 38%,#dff5c8 70%,#9fd76f 100%) fixed!important}
+body:not(:has(.start-screen)) .app::before{content:"";position:fixed;inset:0;background:url('/ui/start.webp') left center/cover;filter:blur(18px) saturate(1.1);opacity:.35;z-index:-1;pointer-events:none}
+/* 위쪽 바 */
+body:not(:has(.start-screen)) header{background:linear-gradient(180deg,#2f68c9,#1d4594)!important;border-bottom:4px solid var(--gold1)!important;box-shadow:0 3px 0 #0f2a63!important}
+header .brand{display:flex;align-items:center;gap:10px}
+.brand .logo{height:50px!important;filter:drop-shadow(0 3px 2px #0006)}
+body:has(.ingame) .brand .logo{height:44px!important}
+.brand .lesson{display:flex;align-items:center;gap:6px;background:linear-gradient(#24386b,#16264d)!important;color:#fff!important;border:2px solid #0b1736;border-radius:999px!important;padding:3px 12px 3px 4px!important;font-size:13px!important;letter-spacing:.5px;box-shadow:0 2px 0 #0b1736}
+.brand .lesson img{height:26px;width:auto}
+.hudhp{display:flex;align-items:center;gap:6px;background:linear-gradient(#24386b,#16264d);border:2px solid #0b1736;border-radius:999px;padding:2px 14px 2px 4px;box-shadow:0 2px 0 #0b1736;min-width:220px}
+.hudhp>img{height:34px;width:auto;filter:drop-shadow(0 2px 1px #0006)}
+.hudhp>div{flex:1;display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:8px}
+.hudhp small{grid-column:1/3;color:#fff;font-weight:900;font-size:11px;line-height:1.1}
+.hudhp>div>i{display:block;height:12px;background:#0b1736;border:2px solid #fff;border-radius:999px;overflow:hidden}
+.hudhp>div>i>i{display:block;height:100%;background:linear-gradient(#7af06a,#2fb52a);transition:width .3s}
+.hudhp>div>i.mid>i{background:linear-gradient(#ffe36a,#f1b20f)}
+.hudhp>div>i.low>i{background:linear-gradient(#ff8a7a,#e0362a)}
+.hudhp b{color:#fff;font-size:12px;font-weight:900;white-space:nowrap}
+.headeractions .connection{border-radius:999px!important}
+.roomcode{background:linear-gradient(var(--gold1),var(--gold2))!important;color:#4a2a00!important;border:2px solid var(--gold3)!important;border-radius:999px!important;box-shadow:0 2px 0 var(--gold3)}
+.imgbtn.fsbtn img,.imgbtn.exitimg img,body:has(.ingame) .exitimg img{height:44px!important;width:auto}
+body:has(.ingame) .imgbtn.fsbtn img,body:has(.ingame) .imgbtn.exitimg img{height:40px!important}
+body:has(.start-screen) .imgbtn.fsbtn img{height:46px!important}
+@media (max-width:900px){.hudhp{min-width:150px}.hudhp small{display:none}.brand .lesson{display:none}}
+
+/* 전장 */
+.ingame .battlepanel{border:5px solid #7a4419!important;border-radius:18px!important;box-shadow:0 0 0 3px var(--gold1),0 6px 0 3px #5a3010!important;overflow:hidden}
+.wavebadge{position:absolute;right:10px;top:8px;z-index:3;display:grid;grid-template-columns:auto auto;grid-template-rows:auto auto;column-gap:8px;align-items:center;background:linear-gradient(#24386b,#111c3b);color:#fff;border:3px solid #0b1736;border-radius:16px;padding:4px 12px 5px 8px;box-shadow:0 3px 0 #0008;pointer-events:none}
+.wavebadge .wskull{grid-row:1/3;font-size:clamp(20px,2.4vw,30px);line-height:1}
+.wavebadge b{font-size:clamp(15px,1.7vw,21px);font-weight:900;line-height:1.1}
+.wavebadge .wtime{position:absolute;right:calc(100% + 8px);top:50%;transform:translateY(-50%);background:linear-gradient(#24386b,#111c3b);border:3px solid #0b1736;border-radius:999px;padding:3px 12px;font-weight:900;font-size:clamp(14px,1.5vw,18px);white-space:nowrap}
+.wavebadge .wdots{display:flex;gap:4px}
+.wavebadge .wdots i{width:clamp(8px,.9vw,11px);height:clamp(8px,.9vw,11px);border-radius:50%;background:#5d6a86;border:1.5px solid #0b1736;display:block}
+.wavebadge .wdots i.on{background:radial-gradient(circle at 35% 30%,#fff3a0,#f5b81b)}
+.ingame .lvbadge{background:linear-gradient(#24386b,#111c3b)!important;border:3px solid #0b1736!important}
+
+/* 아래 패널 3칸: 유닛 소환 | Question | 스킬·아이템 */
+.dock{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.55fr) minmax(0,.62fr)!important;gap:10px!important}
+.dock-units,.dock-side{position:relative;background:linear-gradient(180deg,#2e3f6e,#1b2647)!important;border:4px solid var(--gold2)!important;border-radius:18px!important;box-shadow:0 0 0 3px #7a4a0c,inset 0 0 0 3px #f9cf5a55,0 6px 0 2px #5a3410!important;padding:10px 8px 8px!important}
+.dock-units{display:flex!important;flex-direction:column!important;gap:6px!important;padding-top:8px!important}
+.coinbox{align-self:center;display:flex;align-items:center;gap:8px;background:linear-gradient(#1a2444,#0d1530);border:3px solid var(--gold2);border-radius:999px;padding:2px 16px 2px 2px;box-shadow:0 2px 0 #7a4a0c;margin-top:-2px}
+.coinbox img{height:clamp(30px,3.2vw,40px);width:auto;filter:drop-shadow(0 2px 1px #0007)}
+.coinbox b{color:#fff;font-size:clamp(20px,2.2vw,28px);font-weight:900;line-height:1}
+.coinbox small{color:#c9d4ec;font-weight:800;font-size:12px}
+.dpill{align-self:center;height:clamp(24px,2.7vw,34px);width:auto;filter:drop-shadow(0 2px 1px #0006);pointer-events:none}
+.dock-units .cardrow{flex:1;display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:6px!important;min-height:0}
+.ucard{background:linear-gradient(180deg,#9fd4ff,#5aa7ec 60%,#3a86d6)!important;border:3px solid #13306a!important;border-radius:12px!important;box-shadow:inset 0 0 0 2px #d9efff99,0 3px 0 #0b1c40!important;padding:2px 2px 10px!important}
+.ucard .uname{color:#fff!important;text-shadow:0 1px 0 #13306a,0 0 3px #13306a}
+.ucard .ucost{background:#0d1a3a;border-radius:999px;padding:0 8px 0 2px;text-shadow:none!important;color:#fff!important}
+.ucard .ulv{background:#13306a!important;color:#ffe066!important}
+.ucard.ready{border-color:#ffd447!important}
+.ucard .ubar i{background:linear-gradient(90deg,#ffe066,#f5a91b)!important}
+/* Question 판 */
+.quizpanel{background:var(--parch)!important;border:6px solid var(--wood1)!important;border-radius:20px!important;box-shadow:0 0 0 3px var(--wood2),inset 0 0 0 3px #f3d9a3,0 6px 0 3px #4d2a0e!important;padding:46px 14px 12px!important;overflow:visible!important}
+.quizpanel .qhead{left:50%!important;transform:translateX(-50%);top:-22px!important;height:clamp(46px,5.4vw,62px)!important;width:auto!important;z-index:2}
+.quizpanel::before,.quizpanel::after{content:"🐾";position:absolute;top:10px;font-size:18px;opacity:.55;color:#b06a2a}
+.quizpanel::before{left:14px}.quizpanel::after{right:14px}
+.qtop{top:auto!important;bottom:6px;right:12px!important}
+.quizpanel .question{justify-content:center;text-align:center;font-size:clamp(17px,2vw,26px)!important;color:#1d1d1d!important;margin:2px 0 10px!important}
+.quizpanel .paw{display:none!important}
+.quizpanel .choice{justify-content:center;text-align:center;border:3px solid var(--blueb)!important;background:linear-gradient(#f2f9ff,var(--blue2))!important;box-shadow:inset 0 2px 0 #fff,0 3px 0 #2f6bb2!important;border-radius:14px!important;color:#14223f!important;font-size:clamp(15px,1.7vw,21px)!important;min-height:52px!important}
+.quizpanel .choice b{background:#fff!important;color:#14223f!important;border:2.5px solid #14223f!important;box-shadow:none!important;width:30px!important;height:30px!important}
+.quizpanel .choice:hover:not(:disabled),.quizpanel .choice:active:not(:disabled){background:linear-gradient(#fff3a6,#ffd447)!important;border-color:#c98a0a!important;box-shadow:inset 0 2px 0 #fff8,0 3px 0 #a8620c!important}
+.quizpanel .choice:hover:not(:disabled) b{background:#fff!important;box-shadow:none!important}
+.quizpanel .choices{gap:9px 12px!important}
+/* 스킬 · 아이템 판 */
+.dock-side{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;gap:8px!important;width:auto!important}
+.dock-side .itembar{display:grid!important;grid-template-columns:1fr 1fr;gap:6px;background:#141d38;border-radius:12px;padding:6px;border:2px solid #0b1430}
+.dock-side .itembtn{position:relative;background:none!important;border:0!important;padding:0!important;aspect-ratio:1;display:grid;place-items:center;box-shadow:none!important}
+.dock-side .itembtn img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 1px #0008)}
+.dock-side .itembtn b{position:absolute;right:-2px;bottom:-4px;color:#fff;font-weight:900;font-size:clamp(12px,1.3vw,16px);text-shadow:0 2px 0 #000,0 0 3px #000;background:none!important;border:0!important;padding:0!important}
+.dock-side .itembtn:disabled{filter:grayscale(.7) brightness(.8);opacity:1}
+.dock-side .special{flex:1;min-height:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,#6b4a2a,#2c1d12)!important;border-radius:14px!important;border:2px solid #0b1430!important;padding:6px!important;margin:0!important;width:100%}
+.dock-side .special img{width:auto!important;max-width:100%!important;max-height:100%;height:auto;object-fit:contain}
+.dock-side .special>span{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);display:flex;align-items:center;gap:3px;background:#0d1a3a!important;color:#ffe066!important;border:2px solid var(--gold2)!important;border-radius:999px;padding:0 8px!important;font-size:12px!important}
+.dock-side .special>span img{width:14px!important;height:14px}
+.dock-side .restartbtn{align-self:center}
+.dock-side .skillmsg{color:#ffe69a;font-size:12px;font-weight:900;text-align:center}
+/* 결과 */
+.quizpanel .finish{display:flex;flex-direction:column;align-items:center;gap:4px}
+.resulttitle img{height:clamp(64px,9vw,110px);width:auto;animation:pop .45s ease-out;filter:drop-shadow(0 4px 3px #0004)}
+.rewards{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+.rewards .chest{height:clamp(46px,5.5vw,70px);width:auto;animation:pop .5s ease-out}
+/* 세로 태블릿: 전장 → Question → (유닛 | 스킬) */
+@media (max-aspect-ratio:1/1){
+ .dock{grid-template-columns:1.6fr 1fr!important;grid-template-rows:auto auto!important}
+ .dock .quizpanel{grid-column:1/3;grid-row:1}
+ .dock .dock-units{grid-column:1;grid-row:2}
+ .dock .dock-side{grid-column:2;grid-row:2}
+ .dock-units .cardrow{grid-template-columns:repeat(3,1fr)!important}
+ .wavebadge .wtime{position:static;transform:none;grid-column:1/3;justify-self:center;margin-top:3px;font-size:13px;padding:1px 10px}
+}
+@media (max-width:600px){.dock{grid-template-columns:1fr!important}.dock .quizpanel,.dock .dock-units,.dock .dock-side{grid-column:1!important;grid-row:auto!important}}
+/* 23-1: 아래 패널이 화면 안에 들어오도록 */
+.dock{min-height:0!important;overflow:hidden}
+.dock>section{min-height:0!important;overflow:hidden}
+.quizpanel{overflow:visible!important}
+.dock-units .cardrow{grid-template-rows:repeat(2,minmax(0,1fr))!important}
+.dock-units .ucard{min-height:0!important}
+.dock-units .ucard .unitportrait{height:auto!important;max-height:100%;flex:1;min-height:0;width:auto!important;max-width:90%;object-fit:contain}
+.dock-side .itembar{grid-template-columns:repeat(2,1fr)!important;padding:5px;gap:4px}
+.dock-side .itembtn{aspect-ratio:auto!important;height:clamp(40px,6.2dvh,62px)}
+.dock-side .special{min-height:70px}
+.brand .lesson{display:flex!important}
+@media (max-width:900px){.brand .lesson{display:none!important}}
+.dock{overflow:visible!important;padding-top:16px}
+.ingame .lvbadge{left:50%!important;transform:translateX(-50%);top:8px!important;bottom:auto!important}
+/* 23-2: 대기실 · 교사 화면 · 창(상점/카드덱/스테이지) — 같은 테마 */
+.app:not(:has(.start-screen)){background:linear-gradient(180deg,#8fd3ff 0%,#c9ecff 40%,#e4f6cf 72%,#a6da78 100%)!important;min-height:100dvh}
+.app:not(:has(.start-screen)) footer{color:#2f5a2a!important;opacity:.7}
+.game .stat{background:linear-gradient(#2c4277,#18264d)!important;border:3px solid var(--gold2)!important;box-shadow:0 0 0 2px #7a4a0c,0 4px 0 2px #5a3410!important;border-radius:16px!important}
+.game .stat small{color:#ffd964!important;font-weight:900}
+.game .stat b{color:#fff!important}
+.game .panel,.ovl .ovlbox{background:var(--parch)!important;border:6px solid var(--wood1)!important;border-radius:22px!important;box-shadow:0 0 0 3px var(--wood2),inset 0 0 0 3px #f3d9a3,0 7px 0 3px #4d2a0e!important}
+.game .panel h2,.game .panel h3,.ovl .ovlhead h2{color:#5a300e!important}
+.game .panel h2{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(#ffe47a,#f3b52a);border:3px solid #8a4f0e;border-radius:12px;padding:4px 18px;box-shadow:0 3px 0 #8a4f0e;color:#3c2206!important;margin-top:0}
+.game .player{background:linear-gradient(#f2f9ff,#d4e9fd)!important;border:2px solid var(--blueb)!important;border-radius:12px!important;color:#14223f;font-weight:800}
+.game .players{gap:8px}
+.game button.primary,.ovl button.primary,.ovl .buybtn{background:linear-gradient(#ffd75e,#f6a321)!important;color:#3d2300!important;border:3px solid #8a4f0e!important;border-radius:14px!important;box-shadow:inset 0 2px 0 #fff6,0 4px 0 #8a4f0e!important;font-weight:900;text-shadow:0 1px 0 #fff8}
+.game button.secondary,.ovl button.secondary,.ovl .shopbtn{background:linear-gradient(#7cc4ff,#2f86e0)!important;color:#fff!important;border:3px solid #123f80!important;border-radius:14px!important;box-shadow:inset 0 2px 0 #fff5,0 4px 0 #123f80!important;font-weight:900;text-shadow:0 1px 0 #123f80}
+.game button.danger{background:linear-gradient(#ff8fb8,#ec4f86)!important;color:#fff!important;border:3px solid #8c1b47!important;border-radius:14px!important;box-shadow:inset 0 2px 0 #fff5,0 4px 0 #8c1b47!important;font-weight:900}
+.game button.primary:active,.game button.secondary:active,.game button.danger:active{transform:translateY(3px);box-shadow:0 1px 0 #0005!important}
+.game select,.game input[type=file]{border:3px solid var(--blueb)!important;border-radius:12px!important;background:#fff!important;font-weight:800;color:#14223f}
+.game .teachercontrols label{color:#7a4419!important;font-weight:900}
+.game .waiting{color:#6b4a2a!important;font-weight:800}
+.game .lobby .waiting::before{content:"";display:block;width:110px;height:110px;margin:0 auto 6px;background:url('/ui2/emblem.png') center/contain no-repeat;animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.game .overviewcard{background:linear-gradient(#2c4277,#18264d)!important;border:3px solid var(--gold2)!important;color:#fff!important}
+.game .overviewcard b,.game .overviewcard div{color:#fff!important}
+.game .overviewcard small{color:#ffd964!important}
+.game .overviewcard strong{color:#ffd964!important}
+.ovl .ovlhead h2{background:linear-gradient(#ffe47a,#f3b52a);border:3px solid #8a4f0e;border-radius:12px;padding:3px 16px;box-shadow:0 3px 0 #8a4f0e}
+.ovl .xbtn{background:linear-gradient(#ff8a7a,#e0362a)!important;color:#fff!important;border:3px solid #7a1b10!important;border-radius:12px!important;box-shadow:0 3px 0 #7a1b10!important;font-weight:900}
+.ovl .stagecard,.ovl .shopitem,.ovl .slot,.ovl .deckcard{border:3px solid var(--wood2)!important;border-radius:14px!important;box-shadow:0 4px 0 #4d2a0e!important}
+.ovl .pcoins{background:linear-gradient(#1a2444,#0d1530)!important;color:#fff!important;border:3px solid var(--gold2)!important;border-radius:999px!important}
+/* 세로: 전장 빈칸 없애기 */
+@media (max-aspect-ratio:1/1){.ingame .arena{aspect-ratio:960/250!important;height:auto!important}.quizpanel .question{font-size:clamp(18px,3vw,26px)!important}}
+.hudhp>div{min-width:110px}.hudhp>div>i{min-width:70px}
+@media (max-aspect-ratio:1/1){.quizpanel .choice{font-size:clamp(17px,2.7vw,24px)!important;min-height:62px!important}}
+.shopitem .shopicon{height:86px;width:auto;filter:drop-shadow(0 3px 2px #0004)}
+.shopitem .shopprice{display:inline-flex;align-items:center;gap:4px;background:#0d1a3a;color:#ffe066;border:2px solid var(--gold2);border-radius:999px;padding:1px 10px;font-weight:900;font-size:14px;margin-top:-10px}
+.shopitem .shopprice img{width:16px}
+.quizpanel .finish{gap:2px!important;padding:0!important}
+.resulttitle img{height:clamp(48px,6.5vw,80px)!important}
+.quizpanel .finish .stars{font-size:22px;line-height:1;margin:0}
+.rewards .chest{height:clamp(32px,4vw,46px)!important;width:auto!important;object-fit:contain;flex:none}
+.rewards span{padding:1px 10px!important}
+.quizpanel .finish .autonext{margin-top:4px;padding:6px 12px}
+.ingame .qbody{overflow:auto}

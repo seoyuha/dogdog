@@ -28,7 +28,7 @@ export default function Battle({state,side=0}){
    for(let i=1;i<=10;i++)this.load.image('stage'+i,'/stage/s'+i+'.webp');
    for(const id of SHEETS)this.load.spritesheet('sh_'+id,'/sheets/'+id+'.png',{frameWidth:116,frameHeight:192});
    this.load.atlas('dogs','/sheets2/dogs.png','/sheets2/dogs.json');
-   this.load.atlas('fx','/sheets2/fx.png','/sheets2/fx.json');
+   this.load.atlas('fx','/sheets2/fx.png','/sheets2/fx.json');[1,2,3].forEach(n=>this.load.image('castle'+n,'/ui2/base'+n+'.png'));this.load.image('res_clear','/ui2/clear.png');this.load.image('res_failed','/ui2/failed.png');
   }
   create(){
    this.cameras.main.setZoom(1.5).centerOn(W/2,H/2);
@@ -45,7 +45,9 @@ export default function Battle({state,side=0}){
     const bar=this.add.rectangle(x-53,76,106,9,s?0xff5a5a:0x5ee06a).setOrigin(0,.5).setDepth(8);
     const label=this.add.text(x,62,'',{fontSize:'12px',fontStyle:'bold',color:'#ffffff',stroke:'#1d2433',strokeThickness:4}).setOrigin(.5).setDepth(8);
     return {bg,bar,label,x};});
-   this.waveText=this.add.text(W/2,18,'',{fontSize:'14px',fontStyle:'bold',color:'#ffffff',stroke:'#1f2d45',strokeThickness:4}).setOrigin(.5).setDepth(900);
+   this.waveText=this.add.text(W/2,18,'',{fontSize:'14px',fontStyle:'bold',color:'#ffffff',stroke:'#1f2d45',strokeThickness:4}).setOrigin(.5).setDepth(900).setVisible(false);
+   /* 🏰 우리 기지: 수정 성 (체력에 따라 3단계로 바뀜) */
+   this.castle=this.add.image(70,216,'castle1').setOrigin(.5,1).setDepth(6);this.castle.setScale(180/320);this.castleLv=1;
    this.announcement=this.add.text(W/2,92,'',{fontSize:'28px',fontStyle:'bold',color:'#fff2a8',stroke:'#27364f',strokeThickness:7}).setOrigin(.5).setDepth(910);
    this.resultShade=this.add.rectangle(W/2,H/2,W,H,0x101b35,0).setDepth(920);
    this.banner=this.add.text(W/2,H/2-6,'',{fontSize:'46px',fontStyle:'bold',color:'#fff',stroke:'#34405b',strokeThickness:9}).setOrigin(.5).setDepth(931);
@@ -87,7 +89,7 @@ export default function Battle({state,side=0}){
     if(e.enemyType)this.enemyAttackFx({...e,toX:e.x});
     this.hit(e.x,GROUND-45,0xffad7a);this.cameras.main.shake(60,.0014);this.floatingText(e.x,GROUND-95,'-'+Math.round(e.damage),'#ff9f92');
    }else if(e.kind==='special'){
-    this.flashAnnouncement('⚡ 발사 OK!! ⚡',0xffef8e);this.cameras.main.flash(260,255,242,157);this.cameras.main.shake(280,.004);
+    this.flashAnnouncement('🐾 댕댕 필살기! 🐾',0xffef8e);this.cameras.main.flash(260,255,242,157);this.cameras.main.shake(280,.004);
     for(let i=0;i<9;i++){const x=110+i*90;const bolt=this.add.text(x,40+(i%3)*24,'⚡',{fontSize:'34px'}).setDepth(800).setOrigin(.5);this.tweens.add({targets:bolt,y:GROUND-20,alpha:0,duration:420+i*20,onComplete:()=>bolt.destroy()})}
    }else if(e.kind==='item'){
     const x=e.side?872:80;const msg={heal:'❤️ 체력 회복!',power:'💪 공격력 UP!',shield:'🛡️ 방어력 UP!',charge:'⚡ 코인 충전!'}[e.item]||'';
@@ -235,6 +237,7 @@ export default function Battle({state,side=0}){
    for(let i=0;i<2;i++){const base=data.teams[i];if(base&&base.hp<=0&&!this.destroyedBases.has(i)){this.destroyedBases.add(i);const x=this.bases[i].x;this.cameras.main.shake(480,.007);for(let j=0;j<16;j++){const bit=this.add.circle(x,GROUND-50,Phaser.Math.Between(3,8),[0xffdf82,0xff8666,0xffffff][j%3]).setDepth(850);const an=j*Math.PI/8;this.tweens.add({targets:bit,x:x+Math.cos(an)*Phaser.Math.Between(30,90),y:GROUND-50+Math.sin(an)*Phaser.Math.Between(20,70),alpha:0,duration:750,onComplete:()=>bit.destroy()});}this.floatingText(x,GROUND-110,'BASE DESTROYED!','#ffe38b');}}
    if(data.wave!==this.lastWave)this.lastWave=data.wave;
    this.waveText.setText(`WAVE ${data.wave}  ·  ${data.mode==='pvp'?'TEAM BATTLE':'DEFEND THE KINGDOM'}`);
+   {const t0=data.teams[0];if(t0&&this.castle){const r=t0.hp/t0.maxHp;const lv=r>.66?1:r>.33?2:3;if(lv!==this.castleLv){this.castleLv=lv;this.castle.setTexture('castle'+lv);this.tweens.add({targets:this.castle,scaleX:this.castle.scaleX*1.06,scaleY:this.castle.scaleY*.94,yoyo:true,duration:120});}}}
    this.bases.forEach((b,i)=>{const t=data.teams[i];if(!t)return;b.label.setText(`${t.shieldT>0?'🛡️ ':''}${t.powerT>0?'💪 ':''}${Math.ceil(t.hp)} / ${t.maxHp}`);b.bar.width=106*Math.max(0,t.hp/t.maxHp)});
    const now=this.time.now,live=new Set();
    for(const u of data.units){live.add(u.id);let a=this.actors.get(u.id);if(!a){a=this.makeActor(u,data);a.shieldTint=u.enemyType==='shield';this.actors.set(u.id,a);}
@@ -249,7 +252,7 @@ export default function Battle({state,side=0}){
     if(a.dog){a.img.clearTint();a.img.setFrame(a.id+'_die');a.pose2='die';a.motion='dead';this.add.image(a.container.x,GROUND-a.h*.6,'fx','star').setScale(.6).setDepth(700).setAlpha(.9);this.tweens.add({targets:a.container,alpha:0,y:GROUND+4,delay:520,duration:380,onComplete:()=>a.container.destroy()});}
     else if(a.sheet){a.img.clearTint();a.img.play(a.id+'_die');this.tweens.add({targets:a.container,alpha:0,delay:650,duration:350,onComplete:()=>a.container.destroy()});}
     else{a.img.setTint(0xd9d9d9);this.tweens.add({targets:a.rig,angle:-a.dir*82,y:-3,x:-a.dir*12,duration:420,ease:'Quad.easeIn'});this.tweens.add({targets:a.container,alpha:0,delay:260,duration:420,onComplete:()=>a.container.destroy()});}}
-   this.banner.setText(data.finished?(data.winner===null?'🤝 DRAW':data.winner===sideRef.current?'🏆 VICTORY!':'💫 DEFEAT'):'');
+   {const res=data.finished?(data.winner===null?'draw':data.winner===sideRef.current?'win':'lose'):'';this.banner.setText(res==='draw'?'🤝 DRAW':'');if(res==='win'||res==='lose'){if(!this.resImg){this.resImg=this.add.image(W/2,H/2-14,res==='win'?'res_clear':'res_failed').setDepth(931).setScale(.05);this.tweens.add({targets:this.resImg,scale:res==='win'?.42:.4,duration:420,ease:'Back.Out'});}}else if(this.resImg){this.resImg.destroy();this.resImg=null;}};
   }
  }
  const game=new Phaser.Game({type:Phaser.AUTO,parent:mount.current,width:W*1.5,height:H*1.5,backgroundColor:'#7fc4e8',scale:{mode:Phaser.Scale.FIT,autoCenter:Phaser.Scale.CENTER_BOTH},render:{antialias:true},scene:[Arena]});

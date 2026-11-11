@@ -7,7 +7,7 @@ export const SHOP=[
  {id:'heal',name:'체력 회복',desc:'우리 기지 체력 +400',price:300},
  {id:'power',name:'공격력 강화',desc:'30초 동안 공격력 1.3배',price:200},
  {id:'shield',name:'방어력 강화',desc:'30초 동안 기지가 받는 피해 절반',price:250},
- {id:'charge',name:'스킬 충전',desc:'전투 코인 +250 (발사 OK!! 한 번)',price:400},
+ {id:'charge',name:'스킬 충전',desc:'전투 코인 +250 (댕댕 필살기 한 번)',price:400},
 ];
 const KEY=n=>'dd-profile-'+String(n||'').trim();
 /* 🃏 카드: 처음엔 6장을 가지고 시작, 나머지는 상점에서 열어요. 카드 레벨(1~5)은 코인으로 강화 */
