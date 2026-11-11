@@ -2,8 +2,8 @@ import {randomBytes,timingSafeEqual} from 'node:crypto';
 import express from 'express';import http from 'node:http';import {Server} from 'socket.io';import {createBattle,spawn,tick,snapshot,TYPES,setPlayers,useItem} from './engine.js';import {bank,parseQuestions,publicQuestion,selectQuestion,shuffled} from './questions.js';import path from 'node:path';import {fileURLToPath} from 'node:url';
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const app=express();const server=http.createServer(app);const io=new Server(server,{cors:{origin:true}});const rooms=new Map();
-app.use(express.json({limit:'4mb'}));app.get('/api/health',(req,res)=>res.json({ok:true,rooms:rooms.size,version:'23.0.0'}));app.get('/api/units',(req,res)=>res.json(TYPES));
-app.get('/api/status',(req,res)=>res.json({version:'23.0.0',activeRooms:rooms.size,connectedSockets:io.engine.clientsCount,uptimeSeconds:Math.floor(process.uptime())}));
+app.use(express.json({limit:'4mb'}));app.get('/api/health',(req,res)=>res.json({ok:true,rooms:rooms.size,version:'24.0.0'}));app.get('/api/units',(req,res)=>res.json(TYPES));
+app.get('/api/status',(req,res)=>res.json({version:'24.0.0',activeRooms:rooms.size,connectedSockets:io.engine.clientsCount,uptimeSeconds:Math.floor(process.uptime())}));
 app.use(express.static(path.join(ROOT,'dist')));
 /* 화면 파일(dist)이 없을 때(빌드를 안 했을 때) 빈 화면 대신 안내 */
 app.get('/',(req,res)=>res.status(503).type('html').send('<meta charset="utf-8"><body style="font-family:sans-serif;padding:30px;line-height:1.8"><h2>🐕 댕댕대작전: 화면 파일이 아직 없어요</h2><p>서버는 켜져 있지만 화면(dist)을 만들지 않았어요.</p><ul><li>교실 컴퓨터: <b>Windows_실행.bat</b>로 실행하고 <b>http://localhost:5173</b>으로 들어가세요.</li><li>Render: Build Command를 <code>npm install &amp;&amp; npm run build</code>로 바꾸고 다시 배포하세요.</li></ul></body>'));
@@ -75,14 +75,14 @@ function rejoin(socket,room,p){
  if(room.started&&p.matchId){const b=room.matches.get(p.matchId);socket.emit('matchReady',{side:room.mode==='pvp'?p.team%2:0,matchId:p.matchId});if(b)socket.emit('state',snapshot(b));p.current=null;if(b&&!b.finished)sendQuestion(socket,p);}
  broadcastLobby(room);return {ok:true,rejoined:true,room:room.id,sessionToken:p.sessionToken};
 }
-function broadcastLobby(room){io.to(room.id).emit('lobby',{room:room.id,mode:room.mode,stage:Number.isInteger(room.stage)?room.stage:-1,started:room.started,paused:room.paused,practice:!!room.practice,players:[...room.players.values()].map(p=>({id:p.id,name:p.name,teacher:p.teacher,team:p.team,correct:p.correct,attempts:p.attempts,offline:!!p.offline}))});}
+function broadcastLobby(room){io.to(room.id).emit('lobby',{room:room.id,mode:room.mode,startedAt:room.startedAt||null,bankSize:(room.bank||bank).length,stage:Number.isInteger(room.stage)?room.stage:-1,started:room.started,paused:room.paused,practice:!!room.practice,players:[...room.players.values()].map(p=>({id:p.id,name:p.name,teacher:p.teacher,team:p.team,correct:p.correct,attempts:p.attempts,offline:!!p.offline}))});}
 function get(socket){const r=rooms.get(socket.data.room);return [r,r?.players.get(socket.id)];}
 function sendQuestion(socket,p){if(p.teacher||!p.matchId)return;const r=rooms.get(socket.data.room);const q=shuffled(selectQuestion(p,r?.bank||bank));p.current=q;p.answered=false;socket.emit('question',publicQuestion(q));}
 function matchOf(r,p){return r?.matches.get(p?.matchId)}
 function start(r){const students=[...r.players.values()].filter(p=>!p.teacher);if(!students.length)return {error:'학생이 한 명 이상 들어와야 시작할 수 있습니다.'};
 if(r.mode==='pvp'){const teams=new Set(students.map(p=>p.team));for(const t of teams){if(!teams.has(t%2?t-1:t+1))return {error:`${t+1}팀의 상대인 ${(t%2?t-1:t+1)+1}팀에 학생이 없습니다. 대항전은 1팀 vs 2팀, 3팀 vs 4팀, 5팀 vs 6팀이에요.`};}}
 if(['coop','pvp'].includes(r.mode)&&[...new Set(students.map(p=>p.team))].some(team=>students.filter(p=>p.team===team).length>5))return {error:'팀별 최대 5명입니다.'};
-r.started=true;r.paused=false;r.matches.clear();
+r.started=true;r.paused=false;r.matches.clear();r.startedAt=Date.now();
 const st=Number.isInteger(r.stage)?r.stage:undefined;
 if(r.mode==='solo'){for(const p of students){const id=p.id;p.matchId=id;r.matches.set(id,createBattle('solo',2,{stage:st,bonusGold:p.bonus}));}}
 else if(r.mode==='coop'){for(const p of students){const id='T'+p.team;p.matchId=id;if(!r.matches.has(id))r.matches.set(id,createBattle('coop',2,{stage:st}));}}
@@ -126,6 +126,8 @@ socket.on('autoTeams',(_,cb)=>{const [r,p]=get(socket);if(!r||!p?.teacher||r.sta
  /* 섞어서 팀마다 고르게 (최대 5명) */
  const order=students.sort(()=>Math.random()-.5);order.forEach((x,i)=>{x.team=i%n});broadcastLobby(r);cb?.({ok:true,teams:n});});
 socket.on('start',(_,cb)=>{const [r,p]=get(socket);if(!r||!p?.teacher||r.started)return;const res=start(r);if(typeof cb==='function')cb(res);});
+/* 👀 교사 관전: 고른 전장의 화면을 실시간으로 받아요 */
+socket.on('watch',(id,cb)=>{const [r,p]=get(socket);if(!r||!p?.teacher){cb?.({ok:false});return;}p.watch=id&&r.matches.has(id)?id:null;cb?.({ok:true});});
 socket.on('pause',()=>{const [r,p]=get(socket);if(!r||!p?.teacher||!r.started)return;r.paused=!r.paused;for(const b of r.matches.values())b.paused=r.paused;broadcastLobby(r)});
 socket.on('reset',()=>{const [r,p]=get(socket);if(!r||!p?.teacher)return;for(const [id,q] of r.players)if(q.offline)r.players.delete(id);r.started=false;r.paused=false;r.matches.clear();for(const q of r.players.values()){q.solved.clear();q.correct=0;q.attempts=0;q.current=null;q.matchId=null;}broadcastLobby(r);});
 socket.on('spawn',(typeId,cb)=>{const [r,p]=get(socket);const b=matchOf(r,p);if(!r||!p||p.teacher||!b||r.paused){cb?.({ok:false});return;}const side=r.mode==='pvp'?p.team%2:0;const id=typeof typeId==='object'?String(typeId?.id||''):String(typeId);const lv=typeof typeId==='object'?Number(typeId?.lv)||1:1;const ok=spawn(b,side,id,p.id,lv);cb?.({ok});});
@@ -143,5 +145,5 @@ socket.on('disconnect',()=>{const [r,p]=get(socket);if(!r||!p)return;
  /* 보안: 교사가 접속을 잃더라도 학생에게 관리 권한을 자동으로 부여하지 않습니다. */
 });
 });
-setInterval(()=>{for(const r of rooms.values()){if(!r.started)continue;for(const [id,b0] of r.matches){let b=b0;tick(b,.1);if(b.finished&&!r.paused){b.doneT=(b.doneT||0)+.1;if(b.doneT>=AUTO_NEXT)b=nextBattle(r,id,b);}const state=snapshot(b);if(b.finished)state.nextIn=Math.max(0,Math.ceil(AUTO_NEXT-(b.doneT||0)));state.fixed=Number.isInteger(b.stage);if(state.fixed)state.stage=b.stage;state.round=b.round||1;for(const p of r.players.values())if(p.matchId===id)io.to(p.id).emit('state',state);}const summary=[...r.matches.entries()].map(([id,b])=>({id,name:[...r.players.values()].find(p=>p.matchId===id&&!p.teacher)?.name,mode:b.mode,remaining:Math.ceil(b.remaining),hp:b.teams.map(t=>Math.ceil(t.hp)),wave:b.wave,finished:b.finished}));for(const p of r.players.values())if(p.teacher)io.to(p.id).emit('overview',summary);}},100);
+setInterval(()=>{for(const r of rooms.values()){if(!r.started)continue;for(const [id,b0] of r.matches){let b=b0;tick(b,.1);if(b.finished&&!r.paused){b.doneT=(b.doneT||0)+.1;if(b.doneT>=AUTO_NEXT)b=nextBattle(r,id,b);}const state=snapshot(b);for(const t of r.players.values())if(t.teacher&&t.watch===id)io.to(t.id).emit('watchState',{id,state});if(b.finished)state.nextIn=Math.max(0,Math.ceil(AUTO_NEXT-(b.doneT||0)));state.fixed=Number.isInteger(b.stage);if(state.fixed)state.stage=b.stage;state.round=b.round||1;for(const p of r.players.values())if(p.matchId===id)io.to(p.id).emit('state',state);}const summary=[...r.matches.entries()].map(([id,b])=>({id,name:[...r.players.values()].find(p=>p.matchId===id&&!p.teacher)?.name,mode:b.mode,remaining:Math.ceil(b.remaining),hp:b.teams.map(t=>Math.ceil(t.hp)),maxHp:b.teams.map(t=>t.maxHp),round:b.round||1,members:[...r.players.values()].filter(p=>!p.teacher&&p.matchId===id).map(p=>({name:p.name,team:p.team})),wave:b.wave,finished:b.finished}));for(const p of r.players.values())if(p.teacher)io.to(p.id).emit('overview',summary);}},100);
 const port=Number(process.env.PORT)||3001;server.listen(port,'0.0.0.0',()=>console.log('DaengDaeng Battle server: http://localhost:'+port));

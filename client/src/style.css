@@ -605,3 +605,142 @@ body:has(.start-screen) .imgbtn.fsbtn img{height:46px!important}
 .rewards span{padding:1px 10px!important}
 .quizpanel .finish .autonext{margin-top:4px;padding:6px 12px}
 .ingame .qbody{overflow:auto}
+
+/* ═══════════ 24단계: 교사 관리실 (TEACHER CONTROL CENTER) ═══════════ */
+body:has(.tcenter) header,body:has(.tcenter) footer{display:none!important}
+body:has(.tcenter) .app{padding:0!important;max-width:none!important}
+.tcenter{position:relative;min-height:100dvh;height:100dvh;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;gap:8px;padding:6px 12px 10px;background:linear-gradient(180deg,#86cdf6 0%,#bfe6fb 30%,#d6efc0 62%,#7fc457 100%);overflow:hidden;font-family:inherit}
+.tcenter::before{content:"";position:absolute;inset:0;background:url('/ui/start.webp') center/cover;opacity:.25;filter:blur(6px);pointer-events:none}
+.tcenter>*{position:relative;z-index:1}
+/* 위 */
+.tc-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:64px}
+.tc-mascot{position:absolute;left:-4px;top:-2px;height:clamp(70px,10vh,104px);width:auto;filter:drop-shadow(0 4px 3px #0004);z-index:3}
+.tc-logo{height:clamp(40px,6vh,58px);width:auto;margin-left:clamp(90px,10vw,130px);filter:drop-shadow(0 3px 2px #0005)}
+.tc-title{height:clamp(52px,8vh,78px);width:auto;filter:drop-shadow(0 4px 3px #0005)}
+.tc-topbtns{justify-self:end;display:flex;align-items:center;gap:8px}
+.tc-ico{background:none!important;border:0!important;padding:0!important;box-shadow:none!important}
+.tc-ico img{height:44px;width:auto;display:block;filter:drop-shadow(0 3px 2px #0005)}
+.tc-ico:active{transform:translateY(2px)}
+.tc-modechip{background:linear-gradient(#24386b,#16264d);color:#fff;border:3px solid #f0a51b;border-radius:999px;padding:4px 14px;font-weight:900;font-size:14px;box-shadow:0 3px 0 #7a4a0c}
+/* 숫자 카드 */
+.tc-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.tc-stat{display:flex;align-items:center;gap:10px;background:linear-gradient(#2c4277,#18264d);border:4px solid #f0a51b;border-radius:16px;box-shadow:0 0 0 2px #7a4a0c,0 4px 0 2px #5a3410;padding:6px 12px;color:#fff;min-width:0}
+.tc-stat .ic{font-size:clamp(24px,3vw,36px);line-height:1;filter:drop-shadow(0 2px 1px #0007)}
+.tc-stat>div{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.tc-stat small{font-weight:900;font-size:13px;color:#ffe066;white-space:nowrap}
+.tc-stat small i{font-style:normal;font-size:10px;color:#cfd9f0}
+.tc-stat b{display:flex;align-items:center;justify-content:center;gap:6px;background:#fff;color:#14223f;border-radius:10px;padding:2px 8px;font-size:clamp(17px,2.1vw,26px);font-weight:900;white-space:nowrap;box-shadow:inset 0 2px 3px #0003}
+.tc-stat b i{font-style:normal;font-size:13px;color:#4a5a7a}
+.tc-stat b.code{letter-spacing:2px}
+.tc-stat b.code button{background:linear-gradient(#5aa7ff,#2a6fd6)!important;color:#fff!important;border:2px solid #123f80!important;border-radius:8px!important;padding:0 7px!important;font-size:16px!important;box-shadow:none!important;letter-spacing:0;min-height:0!important}
+/* 가운데 */
+.tc-body{display:grid;grid-template-columns:minmax(150px,.62fr) minmax(0,2.3fr) minmax(0,1.45fr);gap:10px;min-height:0}
+.tc-side{display:flex;flex-direction:column;gap:8px;background:linear-gradient(#7a5a3a,#5a3e22);border:4px solid #3e2812;border-radius:18px;padding:10px 8px;box-shadow:inset 0 0 0 3px #a37a4c66,0 5px 0 #2d1c0b;overflow:auto}
+.tc-side button{display:flex;align-items:center;gap:8px;justify-content:flex-start;background:linear-gradient(#3a5590,#203668)!important;color:#fff!important;border:3px solid #0f2050!important;border-radius:14px!important;padding:8px 10px!important;font-weight:900;font-size:clamp(14px,1.45vw,18px)!important;box-shadow:inset 0 2px 0 #ffffff33,0 3px 0 #0b1636!important;min-height:0!important;text-align:left;white-space:nowrap}
+.tc-side button span{font-size:1.2em}
+.tc-side button.on{background:linear-gradient(#ffcf5a,#f19b1c)!important;color:#3d2300!important;border-color:#8a4f0e!important;box-shadow:0 0 0 3px #fff8,0 3px 0 #8a4f0e!important;transform:translateX(4px)}
+.tc-main,.tc-rankbox{position:relative;display:flex;flex-direction:column;min-height:0;background:#fff8e6;border:6px solid #e0a52a;border-radius:20px;box-shadow:0 0 0 3px #8a5a14,inset 0 0 0 3px #fbe2a6,0 6px 0 3px #5a3a0e;padding:34px 10px 10px}
+.tc-rib{position:absolute;left:50%;top:-16px;transform:translateX(-50%);height:clamp(38px,5.4vh,52px);width:auto;max-width:92%;object-fit:contain;filter:drop-shadow(0 3px 2px #0005);z-index:2}
+.tc-ribtext{position:absolute;left:50%;top:-14px;transform:translateX(-50%);margin:0;height:clamp(34px,5vh,46px);display:flex;align-items:center;padding:0 26px 0 64px;background:linear-gradient(#8a5523,#5e3410);color:#fff;border:3px solid #f0b13a;border-radius:10px;font-size:clamp(15px,1.7vw,20px);font-weight:900;white-space:nowrap;z-index:3;box-shadow:0 3px 0 #3e2009}
+.tc-main:has(.tc-ribtext) .tc-rib{opacity:0}
+.tc-ribtext::before{content:"⚔️";position:absolute;left:18px;font-size:24px}
+.tc-scroll{flex:1;min-height:0;overflow:auto;padding:4px 2px}
+/* 전장 카드 */
+.tc-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tc-field{display:flex;align-items:center;gap:8px;background:linear-gradient(#f4f9ff,#dbeafc);border:3px solid #9cbfe6;border-radius:16px;padding:6px 8px;box-shadow:0 3px 0 #7a9cc8;min-height:96px}
+.tc-field.wait{background:linear-gradient(#fffaf0,#f6ead2);border-color:#d8b77a;box-shadow:0 3px 0 #b8925a}
+.tc-field.done{filter:saturate(.7);opacity:.85}
+.tc-dog{width:clamp(56px,6.5vw,84px);height:clamp(56px,6.5vw,84px);object-fit:contain;flex:none;filter:drop-shadow(0 3px 2px #0003)}
+.tc-fbody{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.tc-fhead{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.tc-fname{font-size:16px;color:#14223f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tc-wave{font-weight:900;color:#14223f;font-size:clamp(13px,1.4vw,17px);white-space:nowrap}
+.tc-fbody small{color:#4a5a7a;font-weight:800;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tc-vs{display:flex;align-items:center;gap:4px;font-weight:900;color:#5a3010}
+.tc-tag{display:inline-block;color:#fff;font-weight:900;border-radius:8px;padding:1px 9px;font-size:13px;border:2px solid #0004;text-shadow:0 1px 0 #0006;white-space:nowrap}
+.tc-fhead .tc-tag{font-size:16px;padding:2px 12px;transform:skewX(-8deg)}
+.tc-hp{position:relative;height:22px;background:#1c2540;border:2.5px solid #0e1430;border-radius:999px;overflow:hidden}
+.tc-hp i{display:block;height:100%;background:linear-gradient(#7af06a,#2fb52a);border-radius:999px;transition:width .4s}
+.tc-hp.mid i{background:linear-gradient(#ffe36a,#f1b20f)}
+.tc-hp.low i{background:linear-gradient(#ff8a7a,#e0362a)}
+.tc-hp b{position:absolute;inset:0;display:flex;align-items:center;padding-left:10px;color:#fff;font-weight:900;font-size:13px;text-shadow:0 1px 0 #000,0 0 3px #000}
+.tc-watch{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;width:62px;height:64px;background:linear-gradient(#ffe27a,#f5a721)!important;color:#5a2e00!important;border:3px solid #8a4f0e!important;border-radius:12px!important;box-shadow:inset 0 2px 0 #fff8,0 3px 0 #8a4f0e!important;font-size:22px!important;font-weight:900;padding:0!important;min-height:0!important}
+.tc-watch small{font-size:11px}
+.tc-watch:active{transform:translateY(2px)}
+.tc-empty{grid-column:1/3;display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px;color:#6b4a2a;font-weight:800;text-align:center}
+.tc-empty img{height:120px;animation:bob 1.6s ease-in-out infinite}
+.tc-empty b{font-size:1.3em;color:#2a4fae;letter-spacing:2px}
+/* 랭킹 표 */
+.tc-table{display:flex;flex-direction:column;gap:4px}
+.tc-tr{display:grid;grid-template-columns:44px minmax(0,1.5fr) 56px 64px 58px;align-items:center;gap:4px;padding:4px 6px;border-radius:10px;background:#fff;border:1.5px solid #e2d3b0;font-weight:800;color:#14223f;font-size:clamp(13px,1.3vw,16px);text-align:center}
+.tc-tr.th{background:#dbe7f8;border-color:#b8cbe8;color:#2a3a5a;font-size:12px;position:sticky;top:0;z-index:1}
+.tc-tr:nth-child(2){background:#fff7d6}
+.tc-name{text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tc-rank{display:grid;place-items:center;font-size:16px}
+.tc-rank img{height:30px;width:auto}
+.tc-tr em{font-style:normal;display:inline-block;border-radius:8px;padding:1px 6px;font-size:13px}
+.tc-tr em.g{background:#c9f5c4;color:#17701a}.tc-tr em.y{background:#fff0b3;color:#8a6400}.tc-tr em.r{background:#ffd6d0;color:#a3261a}
+.tc-none,.tc-note{color:#6b4a2a;font-weight:700;font-size:14px;line-height:1.5}
+.tc-pad h4{margin:6px 0;color:#5a300e}
+/* 팀 배정 */
+.tc-teamgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tc-teamcol{display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border:3px solid var(--tc);border-radius:14px;padding:6px;box-shadow:0 3px 0 #0002;min-height:150px}
+.tc-teamcol>img{height:58px;width:auto}
+.tc-teamcol>small{font-weight:900;color:#4a5a7a}
+.tc-mem{width:100%;display:flex;align-items:center;justify-content:space-between;gap:4px;background:#f3f6fb;border-radius:8px;padding:2px 4px 2px 8px;font-weight:800;font-size:14px}
+.tc-mem select{padding:2px 4px!important;font-size:13px!important;border:2px solid var(--tc)!important;border-radius:8px!important;width:auto!important;min-height:0!important}
+/* 설정 */
+.tc-modes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tc-modes button,.tc-stages button{display:flex;flex-direction:column;align-items:center;gap:2px;background:#fff!important;color:#14223f!important;border:3px solid #9cbfe6!important;border-radius:14px!important;padding:8px!important;font-weight:900;box-shadow:0 3px 0 #7a9cc8!important;min-height:0!important}
+.tc-modes button b{font-size:28px}
+.tc-modes button small,.tc-stages button small{color:#4a5a7a;font-size:11px}
+.tc-modes button.on,.tc-stages button.on{background:linear-gradient(#fff3a6,#ffd447)!important;border-color:#c98a0a!important;box-shadow:0 0 0 3px #fff,0 3px 0 #a8620c!important}
+.tc-modes button:disabled{opacity:.55}
+.tc-stages{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.tc-stages button{padding:4px!important;font-size:12px}
+.tc-stages img{width:100%;aspect-ratio:1152/300;object-fit:cover;border-radius:8px}
+.tc-stages .auto{width:100%;aspect-ratio:1152/300;display:grid;place-items:center;background:linear-gradient(90deg,#8fd3ff,#ffd447,#ff8a7a);border-radius:8px;font-weight:900;color:#fff;text-shadow:0 1px 0 #0006}
+.tc-qbox{display:flex;gap:16px;align-items:flex-start}
+.tc-qcount{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff3a6,#f5b81b);border:4px solid #a8620c;box-shadow:0 4px 0 #7a4a0c}
+.tc-qcount b{font-size:34px;color:#4a2a00;line-height:1}
+.tc-qcount small{font-weight:900;color:#6b3a00}
+.tc-pad code{background:#f1e6cc;border-radius:6px;padding:1px 5px;font-size:12px}
+/* 아래 버튼 */
+.tc-bottom{display:flex;flex-direction:column;gap:6px}
+.tc-big{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tc-small{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.tc-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:999px!important;font-weight:900!important;color:#fff!important;padding:7px 18px!important;font-size:clamp(14px,1.4vw,17px)!important;cursor:pointer;text-shadow:0 2px 0 #0005;border:3px solid #0005!important;min-height:0!important;white-space:nowrap}
+.tc-btn.big{font-size:clamp(18px,2.2vw,28px)!important;padding:8px 18px!important;border:4px solid #f0b13a!important;box-shadow:0 0 0 2px #7a4a0c,inset 0 3px 0 #ffffff55,0 5px 0 2px #4d2a0e!important}
+.tc-btn.green{background:linear-gradient(#6fe04e,#22a51c)!important}
+.tc-btn.blue{background:linear-gradient(#5aa7ff,#1f62c9)!important}
+.tc-btn.purple{background:linear-gradient(#b07cff,#6f2fd0)!important}
+.tc-btn.gold{background:linear-gradient(#ffe27a,#f2a019)!important;color:#4a2a00!important;text-shadow:0 1px 0 #fff8}
+.tc-btn.orange{background:linear-gradient(#ffb04a,#ea6b0e)!important}
+.tc-btn:not(.big){box-shadow:inset 0 2px 0 #ffffff55,0 3px 0 #0005!important}
+.tc-btn:active:not(:disabled){transform:translateY(3px)}
+.tc-btn:disabled,.tc-btn.dis{filter:grayscale(.7);opacity:.6;cursor:default}
+.tc-toast{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:80;background:#14223f;color:#ffe066;border:3px solid #f0a51b;border-radius:999px;padding:8px 22px;font-weight:900;box-shadow:0 5px 0 #0006;animation:pop .3s ease-out}
+/* 관전 창 */
+.tc-watchovl{position:fixed;inset:0;z-index:70;background:#061a36cc;display:grid;place-items:center;padding:16px}
+.tc-watchbox{width:min(1200px,96vw);background:#fff8e6;border:6px solid #e0a52a;border-radius:20px;box-shadow:0 0 0 3px #8a5a14,0 8px 0 3px #5a3a0e;padding:10px}
+.tc-watchhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.tc-watchhead b{font-size:20px;color:#5a300e}
+.tc-watchhead button{background:linear-gradient(#ff8a7a,#e0362a)!important;color:#fff!important;border:3px solid #7a1b10!important;border-radius:12px!important;font-weight:900;padding:4px 14px!important;box-shadow:0 3px 0 #7a1b10!important}
+.tc-watcharena{border:5px solid #7a4419;border-radius:14px;overflow:hidden;background:#1d2f3a;min-height:200px;display:grid;place-items:center;color:#fff}
+.tc-watcharena>*{width:100%}
+.tc-watcharena .arena{height:auto!important;aspect-ratio:960/250}
+/* 세로 · 작은 화면 */
+@media (max-aspect-ratio:1/1){
+ .tcenter{height:auto;min-height:100dvh;overflow:auto;grid-template-rows:auto auto auto auto}
+ .tc-top{grid-template-columns:1fr auto}.tc-title{display:none}
+ .tc-stats{grid-template-columns:repeat(3,1fr)}
+ .tc-body{grid-template-columns:1fr;grid-template-rows:auto minmax(380px,auto) minmax(300px,auto)}
+ .tc-side{flex-direction:row;flex-wrap:wrap;justify-content:center}
+ .tc-side button{flex:1 1 30%;justify-content:center}
+ .tc-big{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:1000px) and (min-aspect-ratio:1/1){.tc-fields{grid-template-columns:1fr}.tc-stat small i{display:none}}
+.tc-main .tc-scroll:has(.tc-fields){display:flex;flex-direction:column}
+.tc-fields{flex:1;grid-auto-rows:minmax(104px,calc((100% - 20px)/3))}
+.tc-field{min-height:0}
+@media (max-aspect-ratio:1/1){.tc-logo{margin-left:112px}.tc-mascot{height:76px}}
