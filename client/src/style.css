@@ -438,3 +438,13 @@ body:has(.start-screen) footer{display:none}
 .sscreen .s-student{top:43.7%;height:15.4%}
 .sscreen .s-how{top:60.4%;height:14.9%}
 .sscreen .s-teacher{top:75.7%;height:15.2%}
+/* 22-5: 이름·방 코드 칸과 버튼 3개를 같은 크기(가로·세로)·같은 간격으로 — 그림의 칸이 그대로 보이고 입력칸은 투명 */
+.sscreen .sentry{left:73.1%!important;width:22.4%!important;height:9.6%!important;background:transparent!important;border-radius:0!important;font-size:2.05cqw!important;padding:0 .4cqw!important;box-shadow:none!important}
+.sscreen .sentry:focus{box-shadow:none!important}
+.sscreen .sentry:focus::placeholder{color:#9fb1cc}
+.sscreen .sname{top:25.05%!important}
+.sscreen .sroom{top:38.85%!important}
+.sscreen .shit{left:65.5%;width:31.3%}
+.sscreen .s-student{top:51.7%;height:11.7%}
+.sscreen .s-how{top:65.5%;height:11.6%}
+.sscreen .s-teacher{top:79.3%;height:11.6%}
