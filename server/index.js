@@ -23,18 +23,38 @@ function join(socket,room,{name,teacher=false,sessionToken}={}){
  const nm=String(name||'학생').trim().slice(0,16);
  if(!nm)return {error:'이름을 입력하세요.'};
  if(sessionToken){if(typeof sessionToken!=='string'||sessionToken.length!==48)return {error:'재접속 인증 정보 형식이 올바르지 않습니다.'};const existing=[...room.players.values()].find(p=>p.sessionToken===sessionToken);
-  if(!existing){if(!room.started&&name)return join(socket,room,{name,teacher:false});return {error:'복구 정보가 올바르지 않습니다. 다른 이름으로 새로 참가하세요.',staleToken:true};}
+  if(!existing){if(name)return join(socket,room,{name,teacher:false,bonusGold:arguments[2]?.bonusGold});return {error:'복구 정보가 올바르지 않습니다. 다른 이름으로 새로 참가하세요.',staleToken:true};}
   /* 와이파이가 끊기면 서버는 최대 수십 초 동안 '접속 중'으로 알고 있어요. 올바른 토큰이면 새 연결로 넘겨받고, 예전 연결은 끊어요. */
   if(!existing.offline&&existing.id!==socket.id){const old=io.sockets.sockets.get(existing.id);const res=rejoin(socket,room,existing);old?.disconnect(true);return res;}
   return rejoin(socket,room,existing);
  }
- if(room.started)return {error:'이미 시작한 방입니다. 기존 참가자는 복구 정보로 재접속하세요.'};
- if([...room.players.values()].some(p=>p.name===nm))return {error:'같은 이름이 이미 있습니다. 이름 뒤에 번호를 붙여 주세요.'};
+ const same=[...room.players.values()].find(p=>p.name===nm);
+ /* 게임 중에 연결이 끊긴 친구가 같은 이름으로 다시 들어오면 원래 자리로 돌아가요 */
+ if(same&&room.started&&same.offline&&!same.teacher)return rejoin(socket,room,same);
+ if(same)return {error:'같은 이름이 이미 있습니다. 이름 뒤에 번호를 붙여 주세요.'};
  if(!teacher&&[...room.players.values()].filter(p=>!p.teacher).length>=30)return {error:'학생은 최대 30명입니다.'};
  const player={id:socket.id,name:nm,teacher,team:0,bonus:Math.max(0,Math.min(150,Number(arguments[2]?.bonusGold)||0)),sessionToken:token(),solved:new Set(),correct:0,attempts:0,current:null,answered:false,matchId:null,offline:false};
  room.players.set(socket.id,player);socket.join(room.id);socket.data.room=room.id;
  socket.emit('joined',{room:room.id,id:socket.id,teacher,mode:room.mode,sessionToken:player.sessionToken});
- broadcastLobby(room);return {ok:true,room:room.id,sessionToken:player.sessionToken};
+ /* 🚪 교사가 이미 게임을 시작했으면: 늦게 온 학생도 바로 전투에 들어가요 */
+ if(room.started&&!teacher)lateJoin(socket,room,player);
+ broadcastLobby(room);return {ok:true,room:room.id,sessionToken:player.sessionToken,late:room.started&&!teacher};
+}
+/* 늦게 들어온 학생 배정
+   - 개인전: 나만의 새 전투
+   - 협동전: 아직 진행 중이고 인원이 가장 적은 팀(최대 5명)에, 자리가 없으면 새 팀
+   - 팀 대항전: 진행 중인 대결 중 인원이 적은 쪽 팀에
+   팀 인원이 늘면 적 기지 체력도 지금 남은 비율 그대로 늘어나요(갑자기 회복되지 않아요). */
+function grow(b,n){const t=b.teams[1];const ratio=t&&t.maxHp?t.hp/t.maxHp:1;setPlayers(b,n);if(b.mode!=='pvp'&&t)t.hp=Math.max(1,Math.round(t.maxHp*ratio));}
+function lateJoin(socket,room,p){const st=Number.isInteger(room.stage)?room.stage:undefined;const students=[...room.players.values()].filter(q=>!q.teacher&&q!==p);const count=id=>students.filter(q=>q.matchId===id).length;
+ if(room.mode==='solo'){const b=createBattle('solo',2,{stage:st,bonusGold:p.bonus});setPlayers(b,1);b.started=true;b.teams[1].gold=9999;if(room.paused)b.paused=true;p.matchId=p.id;room.matches.set(p.id,b);}
+ else if(room.mode==='coop'){let best=null;for(let t=0;t<6;t++){const id='T'+t,b=room.matches.get(id);if(!b||b.finished)continue;const c=students.filter(q=>q.team===t).length;if(c<5&&(!best||c<best.c))best={t,c,id};}
+  if(best){p.team=best.t;p.matchId=best.id;grow(room.matches.get(best.id),best.c+1);}
+  else{let t=0;while(t<5&&(room.matches.has('T'+t)||students.some(q=>q.team===t)))t++;const id='T'+t;const b=createBattle('coop',2,{stage:st});setPlayers(b,1);b.started=true;b.teams[1].gold=9999;if(room.paused)b.paused=true;room.matches.set(id,b);p.team=t;p.matchId=id;}}
+ else{let best=null;for(const [id,b] of room.matches){if(b.finished)continue;const pair=Number(id.slice(1));for(const side of [0,1]){const t=pair*2+side;const c=students.filter(q=>q.team===t).length;if(c<5&&(!best||c<best.c))best={t,c,id};}}
+  if(!best)for(const [id] of room.matches){const pair=Number(id.slice(1));for(const side of [0,1]){const t=pair*2+side;const c=students.filter(q=>q.team===t).length;if(!best||c<best.c)best={t,c,id};}}
+  if(!best)return;p.team=best.t;p.matchId=best.id;const b=room.matches.get(best.id);setPlayers(b,count(best.id)+1);}
+ socket.emit('matchReady',{side:room.mode==='pvp'?p.team%2:0,matchId:p.matchId});const b=room.matches.get(p.matchId);if(b){socket.emit('state',snapshot(b));if(!b.finished)sendQuestion(socket,p);}
 }
 function rejoin(socket,room,p){
  room.players.delete(p.id);for(const b of room.matches.values())for(const u of b.units)if(u.owner===p.id)u.owner=socket.id;
