@@ -424,3 +424,9 @@ body:has(.start-screen) footer{display:none}
 .smodal .modepanel{width:min(560px,96vw);max-height:90dvh;overflow:auto;margin:0}
 .howto p{margin:.5em 0;line-height:1.55;font-size:16px}
 @media (orientation:portrait){.sscreen{width:100vw}}
+/* 22-1: 입력칸을 그림 속 흰 칸(아이콘 구분선 오른쪽)에 딱 맞추기 — 원본 1672×941 픽셀 기준 */
+.sscreen .sentry{box-sizing:border-box!important;position:absolute!important;left:71.53%!important;width:23.8%!important;height:6.3%!important;min-height:0!important;max-height:none!important;margin:0!important;padding:0 .4cqw 0 .9cqw!important;border:0!important;border-radius:0 1.5cqw 1.5cqw 0!important;background:#fff!important;font-size:1.65cqw!important;line-height:1!important;font-weight:700;color:#23426b!important;text-align:left!important;outline:0!important;box-shadow:none!important;appearance:none;-webkit-appearance:none}
+.sscreen .sentry::placeholder{color:#4f6990;opacity:1;font-weight:700}
+.sscreen .sentry:focus{box-shadow:inset 0 0 0 .18cqw #ffc638!important}
+.sscreen .sname{top:24.98%!important}
+.sscreen .sroom{top:34.54%!important}
