@@ -448,3 +448,7 @@ body:has(.start-screen) footer{display:none}
 .sscreen .s-student{top:51.7%;height:11.7%}
 .sscreen .s-how{top:65.5%;height:11.6%}
 .sscreen .s-teacher{top:79.3%;height:11.6%}
+/* ⏩ 자동 다음 전투 안내 */
+.autonext{margin:10px auto 0;max-width:420px;background:#eef7ff;border:2px solid #7fb2ec;border-radius:14px;padding:10px 14px;display:flex;flex-direction:column;gap:4px;position:relative;overflow:hidden;text-align:center}
+.autonext b{color:#1d4a85;font-size:16px}.autonext small{color:#3b5f8f;font-weight:700}
+.autonext i{position:absolute;left:0;bottom:0;height:5px;background:linear-gradient(90deg,#ffd23f,#ff9f1c);transition:width .3s linear}

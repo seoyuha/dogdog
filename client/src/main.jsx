@@ -4,6 +4,7 @@ const ROLE_COLOR={attack:'#ef4444',tank:'#3b82f6',ranged:'#22c55e',support:'#ec4
 const socket=io({autoConnect:true});
 /* 혼자 연습(서버 없이)에서도 같은 화면 처리 함수를 쓰도록 연결해 두는 통로 */
 const bus={h:{},fire(k,d){const f=this.h[k];if(f)f(d)}};const UNIT=[{id:'scout',name:'시바 견습병',icon:'🐕',cost:50},{id:'guard',name:'코기 방패병',icon:'🐶',cost:90},{id:'archer',name:'허스키 궁수',icon:'🐺',cost:120},{id:'mage',name:'푸들 마법사',icon:'🐩',cost:170},{id:'knight',name:'리트리버 기사',icon:'🦮',cost:210},{id:'dragon',name:'늑대 용사',icon:'🐕‍🦺',cost:320}];
+const STAGE_LABEL=i=>`스테이지 ${i+1} · ${PF.STAGE_NAMES[i]||''}`;
 function App(){const [homeMode,setHomeMode]=useState(''),[prof,setProf]=useState(PF.load('')),[overlay,setOverlay]=useState(''),[reward,setReward]=useState(null),[toast,setToast]=useState(''),[soloStage,setSoloStage]=useState(0),[round,setRound]=useState(0),[result,setResult]=useState(null),[pin,setPin]=useState(''),[name,setName]=useState(''),[roomInput,setRoomInput]=useState(''),[room,setRoom]=useState(''),[teacher,setTeacher]=useState(false),[mode,setMode]=useState('solo'),[lobby,setLobby]=useState(null),[state,setState]=useState(null),[side,setSide]=useState(0),[question,setQuestion]=useState(null),[feedback,setFeedback]=useState(''),[overview,setOverview]=useState([]),[error,setError]=useState(''),[busy,setBusy]=useState(false),[fullscreen,setFullscreen]=useState(false),[skillInfo,setSkillInfo]=useState(''),[connected,setConnected]=useState(socket.connected);const fileRef=useRef(null);useEffect(()=>{setProf(PF.load(name))},[name]);const doneRound=useRef(-1);
 const profRef=useRef(prof);profRef.current=prof;
 /* 기록 바꾸기: 바로 저장하고 결과를 돌려줘요 */
@@ -82,7 +83,7 @@ return <div className="app"><header><div className="brand"><img className="logo"
   {state.winner===side&&soloStage<9&&<button className="primary" onClick={()=>startStage(soloStage+1)}>▶ 다음 스테이지</button>}
   <button className="secondary" onClick={()=>startStage(soloStage)}>🔁 다시 하기</button>
   <button className="secondary" onClick={()=>setOverlay('stages')}>🗺️ 스테이지 선택</button>
-  <button className="secondary" onClick={()=>setOverlay('deck')}>🃏 카드덱</button><button className="secondary" onClick={()=>setOverlay('shop')}>🛒 상점</button></div>:<p>선생님이 다음 전투를 시작할 때까지 기다려요.</p>}</div>
+  <button className="secondary" onClick={()=>setOverlay('deck')}>🃏 카드덱</button><button className="secondary" onClick={()=>setOverlay('shop')}>🛒 상점</button></div>:<div className="autonext"><b>⏩ {state.nextIn??8}초 뒤 다음 전투가 자동으로 시작돼요</b><small>{mode==='pvp'?'같은 팀끼리 새 판을 해요.':state.fixed?(state.winner===side?(state.stage<9?`다음: ${STAGE_LABEL(state.stage+1)}`:'마지막 스테이지에 다시 도전!'):`${STAGE_LABEL(state.stage)} 다시 도전!`):'계속 이어서 싸워요!'}</small><i style={{width:(100-((state.nextIn??8)/8)*100)+'%'}}/></div>}</div>
  :question?<><p className="question"><span className="paw">🐾</span>{question.question}</p><div className="choices">{question.choices.map((c,i)=><button className={"choice c"+(i+1)} disabled={busy||state?.paused} onClick={()=>answer(i+1)} key={i}><b>{i+1}</b><span>{c}</span></button>)}</div></>
    :<div className="waiting">{result?<img className="resultbadge" src={result.right?'/ui/correct.png':'/ui/wrong.png'} alt={result.right?'정답입니다':'틀렸습니다'}/>:null}<p>{feedback||'다음 문제를 준비하고 있어요…'}</p></div>}</div>
  </section>

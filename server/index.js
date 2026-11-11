@@ -46,6 +46,17 @@ function join(socket,room,{name,teacher=false,sessionToken}={}){
    - 팀 대항전: 진행 중인 대결 중 인원이 적은 쪽 팀에
    팀 인원이 늘면 적 기지 체력도 지금 남은 비율 그대로 늘어나요(갑자기 회복되지 않아요). */
 function grow(b,n){const t=b.teams[1];const ratio=t&&t.maxHp?t.hp/t.maxHp:1;setPlayers(b,n);if(b.mode!=='pvp'&&t)t.hp=Math.max(1,Math.round(t.maxHp*ratio));}
+/* ⏩ 자동 진행: 전투가 끝나면 AUTO_NEXT초 뒤에 다음 전투가 저절로 시작돼요(교사가 다시 누를 필요 없음)
+   - 개인전·협동전: 이기면 다음 스테이지, 지면 같은 스테이지 다시 (스테이지를 '자동'으로 두면 계속 자동)
+   - 팀 대항전: 같은 팀끼리 새 판 */
+const AUTO_NEXT=8;
+function nextBattle(r,id,old){const members=[...r.players.values()].filter(q=>!q.teacher&&q.matchId===id);
+ let st=Number.isInteger(old.stage)?old.stage:undefined;if(st!==undefined&&old.mode!=='pvp'&&old.winner===0)st=Math.min(9,st+1);
+ const b=old.mode==='solo'?createBattle('solo',2,{stage:st,bonusGold:members[0]?.bonus}):old.mode==='coop'?createBattle('coop',2,{stage:st}):createBattle('pvp',2);
+ setPlayers(b,Math.max(1,members.length));b.started=true;if(b.mode!=='pvp')b.teams[1].gold=9999;b.round=(old.round||1)+1;
+ r.matches.set(id,b);
+ for(const q of members){q.current=null;const s=io.sockets.sockets.get(q.id);if(s){s.emit('matchReady',{side:r.mode==='pvp'?q.team%2:0,matchId:id,round:b.round});s.emit('state',snapshot(b));sendQuestion(s,q);}}
+ return b;}
 function lateJoin(socket,room,p){const st=Number.isInteger(room.stage)?room.stage:undefined;const students=[...room.players.values()].filter(q=>!q.teacher&&q!==p);const count=id=>students.filter(q=>q.matchId===id).length;
  if(room.mode==='solo'){const b=createBattle('solo',2,{stage:st,bonusGold:p.bonus});setPlayers(b,1);b.started=true;b.teams[1].gold=9999;if(room.paused)b.paused=true;p.matchId=p.id;room.matches.set(p.id,b);}
  else if(room.mode==='coop'){let best=null;for(let t=0;t<6;t++){const id='T'+t,b=room.matches.get(id);if(!b||b.finished)continue;const c=students.filter(q=>q.team===t).length;if(c<5&&(!best||c<best.c))best={t,c,id};}
@@ -132,5 +143,5 @@ socket.on('disconnect',()=>{const [r,p]=get(socket);if(!r||!p)return;
  /* 보안: 교사가 접속을 잃더라도 학생에게 관리 권한을 자동으로 부여하지 않습니다. */
 });
 });
-setInterval(()=>{for(const r of rooms.values()){if(!r.started)continue;for(const [id,b] of r.matches){tick(b,.1);const state=snapshot(b);for(const p of r.players.values())if(p.matchId===id)io.to(p.id).emit('state',state);}const summary=[...r.matches.entries()].map(([id,b])=>({id,name:[...r.players.values()].find(p=>p.matchId===id&&!p.teacher)?.name,mode:b.mode,remaining:Math.ceil(b.remaining),hp:b.teams.map(t=>Math.ceil(t.hp)),wave:b.wave,finished:b.finished}));for(const p of r.players.values())if(p.teacher)io.to(p.id).emit('overview',summary);}},100);
+setInterval(()=>{for(const r of rooms.values()){if(!r.started)continue;for(const [id,b0] of r.matches){let b=b0;tick(b,.1);if(b.finished&&!r.paused){b.doneT=(b.doneT||0)+.1;if(b.doneT>=AUTO_NEXT)b=nextBattle(r,id,b);}const state=snapshot(b);if(b.finished)state.nextIn=Math.max(0,Math.ceil(AUTO_NEXT-(b.doneT||0)));state.fixed=Number.isInteger(b.stage);if(state.fixed)state.stage=b.stage;state.round=b.round||1;for(const p of r.players.values())if(p.matchId===id)io.to(p.id).emit('state',state);}const summary=[...r.matches.entries()].map(([id,b])=>({id,name:[...r.players.values()].find(p=>p.matchId===id&&!p.teacher)?.name,mode:b.mode,remaining:Math.ceil(b.remaining),hp:b.teams.map(t=>Math.ceil(t.hp)),wave:b.wave,finished:b.finished}));for(const p of r.players.values())if(p.teacher)io.to(p.id).emit('overview',summary);}},100);
 const port=Number(process.env.PORT)||3001;server.listen(port,'0.0.0.0',()=>console.log('DaengDaeng Battle server: http://localhost:'+port));
